@@ -7,13 +7,34 @@
         <title>Vite + TS</title>
     </head>
     <body>
-        <soundcloud-player track-id="1726139961">
-            <div data-title></div>
-            <button data-play>Play</button>
-        </soundcloud-player>
-        <soundcloud-player track-id="1726139940">
-            <div data-title></div>
-            <button data-play>Play</button>
+        <soundcloud-player track-id="1690254516" id="player-1">
+            <div
+                id="content"
+                data-value="0"
+                data-percentage="0"
+                data-progress="dataset.percentage"
+            >
+                <div data-title></div>
+                <div id="bg-container">
+                    <image data-background></image>
+                </div>
+
+                <div class="progress-bar-wrapper">
+                    <input
+                        type="range"
+                        value="0"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        data-progress="value"
+                        data-time
+                    />
+                </div>
+
+                <div id="player-1-control">
+                    <div data-play></div>
+                </div>
+            </div>
         </soundcloud-player>
         <script type="module" src="/src/main.ts"></script>
     </body>
