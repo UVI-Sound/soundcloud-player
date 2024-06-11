@@ -15,6 +15,7 @@ export interface SoundcloudType {
     play: () => void;
     pause: () => void;
     seekTo: (ms: number) => void;
+    skip: (soundIndex: number) => void;
 }
 
 export interface ScOptionsType {
@@ -26,7 +27,8 @@ export type ScEventTypes =
     | 'track.changed'
     | 'track.pause'
     | 'track.progressed'
-    | 'track.time';
+    | 'track.time'
+    | 'track.skip';
 
 const scWindow = window as unknown as {
     SC: {
@@ -37,6 +39,7 @@ const scWindow = window as unknown as {
         };
     };
 };
+
 
 export class Soundcloud {
     soundcloud!: SoundcloudType;
@@ -56,17 +59,21 @@ export class Soundcloud {
         this.bindEvents();
     }
 
-    init(): void {
-        this.iframe.src =
-            'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' +
-            this.options.trackId +
-            '&amp;auto_play=false';
-        hideIframe(this.iframe);
+    /**
+     * https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1844874132%3Fsecret_token%3Ds-2NlVXCYSTCW&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true
+     */
 
+    init(): void {
+
+        this.iframe.allow ="autoplay";
+        this.iframe.src ='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + this.options.trackId;
+
+        hideIframe(this.iframe);
         loadScript('https://w.soundcloud.com/player/api.js', () => {
             this.soundcloud = scWindow.SC.Widget(this.iframe);
             this.soundcloud.bind('ready', () => {
                 this.soundcloud.getSounds((sounds) => {
+                    console.log(sounds)
                     const tracks = sounds.filter((sound) =>
                         Object.prototype.hasOwnProperty.call(sound, 'title'),
                     );
@@ -89,7 +96,7 @@ export class Soundcloud {
      */
     private trackChanged(track: TrackType): void {
         this.currentTrack = track;
-        EventManager.sendFrontEvent(this.getEvent('track.changed'), track);
+        EventManager.sendEvent(this.getEvent('track.changed'), track);
     }
 
     /**
@@ -101,7 +108,7 @@ export class Soundcloud {
         this.currentTrack.percentPlayed = Number(
             ((currentPosition / this.currentTrack.duration) * 100).toFixed(2),
         );
-        EventManager.sendFrontEvent(this.getEvent('track.progressed'));
+        EventManager.sendEvent(this.getEvent('track.progressed'));
     }
 
     private bindEvents(): void {
@@ -115,6 +122,11 @@ export class Soundcloud {
         EventManager.listenEvent(this.getEvent('track.time'), (ms: number) => {
             this.soundcloud.seekTo(ms);
         });
+        EventManager.listenEvent(this.getEvent('track.skip'), (detail, event) => {
+            // console.log(detail);
+            this.soundcloud.skip(detail)
+        })
+
     }
 
     public getEvent(type: ScEventTypes): string {

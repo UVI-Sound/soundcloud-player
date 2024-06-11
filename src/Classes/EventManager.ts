@@ -1,10 +1,6 @@
 export class EventManager {
-    public static sendFrontEvent<EventDetailsType>(
-        type: string,
-        details?: EventDetailsType,
-    ): void {
-        const alpineEvent = new CustomEvent(type, { detail: details ?? {} });
-        dispatchEvent(alpineEvent);
+    public static sendEvent<EventDetailsType>(type: string, details?: EventDetailsType,): boolean {
+        return dispatchEvent(new CustomEvent(type, { detail: details ?? {} }));
     }
 
     /**

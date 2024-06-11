@@ -6,6 +6,7 @@ export class SoundcloudPlayer extends HTMLElement {
     titleContainer: HTMLElement | null;
     playButton: HTMLElement | null;
     stopButton: HTMLElement | null;
+    selectTracks: NodeListOf<HTMLElement>;
     progress: NodeListOf<HTMLElement>;
     soundcloudInstance!: Soundcloud;
     iframePlayer!: HTMLIFrameElement;
@@ -20,8 +21,9 @@ export class SoundcloudPlayer extends HTMLElement {
         this.initSoundcloud();
 
         this.titleContainer = this.querySelector('[data-title]');
-        this.playButton = this.querySelector('[data-play]');
-        this.stopButton = this.querySelector('[data-stop]');
+        this.playButton = this.querySelector('soundcloud-player-play');
+        this.stopButton = this.querySelector('soundcloud-player-stop');
+        this.selectTracks = this.querySelectorAll('soundcloud-player-select-track');
         this.progress = this.querySelectorAll('[data-progress]');
         this.background = this.querySelector('[data-background]');
         this.time = this.querySelector('[data-time]');
@@ -45,14 +47,13 @@ export class SoundcloudPlayer extends HTMLElement {
         );
 
         this.playButton?.addEventListener('click', () => {
-            EventManager.sendFrontEvent(
+            EventManager.sendEvent(
                 this.soundcloudInstance.getEvent('track.play'),
             );
         });
 
         this.stopButton?.addEventListener('click', () => {
-            console.log(this.soundcloudInstance.currentTrack);
-            // EventManager.sendFrontEvent(this.souncloudInstance.getEvent('track.pause'));
+            EventManager.sendEvent(this.soundcloudInstance.getEvent('track.pause'));
         });
 
         this.time?.addEventListener('input', () => {
@@ -62,6 +63,20 @@ export class SoundcloudPlayer extends HTMLElement {
                 this.soundcloudInstance.currentTrack.duration;
             this.soundcloudInstance.soundcloud.seekTo(newTime);
         });
+
+
+        this.selectTracks.forEach((el) => {
+            el.addEventListener('click', () => {
+                EventManager.sendEvent(
+                    this.soundcloudInstance.getEvent('track.skip'),
+                    el.dataset.trackId,
+                );
+                console.log(this.soundcloudInstance.currentTrack)
+                // EventManager.sendEvent(
+                //     this.soundcloudInstance.getEvent('track.play'),
+                // );
+            });
+        })
     }
 
     private initSoundcloud(): void {

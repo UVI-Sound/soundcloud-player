@@ -7,35 +7,45 @@
         <title>Vite + TS</title>
     </head>
     <body>
-        <soundcloud-player track-id="1690254516" id="player-1">
-            <div
-                id="content"
-                data-value="0"
-                data-percentage="0"
-                data-progress="dataset.percentage"
-            >
-                <div data-title></div>
-                <div id="bg-container">
-                    <image data-background></image>
-                </div>
-
-                <div class="progress-bar-wrapper">
+    <div>
+        <soundcloud-player track-id="1823148186">
+            <div style="width: 10vw">
+                <label style="width: 100%; display: flex; justify-content: center;">
                     <input
-                        type="range"
-                        value="0"
-                        min="0"
-                        max="100"
-                        step="0.01"
-                        data-progress="value"
-                        data-time
+                            type="range"
+                            value="0"
+                            min="0"
+                            max="100"
+                            step="0.01"
+                            data-progress="value"
+                            data-time
                     />
-                </div>
-
-                <div id="player-1-control">
-                    <div data-play></div>
+                </label>
+                <div style="display: flex; justify-content: space-around; width: 100%;">
+                    <button type="button" style="margin-right: 20px;">
+                        <soundcloud-player-play>
+                            play
+                        </soundcloud-player-play>
+                    </button>
+                    <button type="button" style="margin-right: 20px;">
+                        <soundcloud-player-select-track  data-track-id="0">
+                            Preset 1
+                        </soundcloud-player-select-track>
+                    </button>
+                    <button type="button" style="margin-right: 20px;">
+                        <soundcloud-player-select-track  data-track-id="1">
+                            Preset 2
+                        </soundcloud-player-select-track>
+                    </button>
+                    <button type="button" style="margin-right: 20px;">
+                        <soundcloud-player-select-track  data-track-id="2">
+                            Preset 3
+                        </soundcloud-player-select-track>
+                    </button>
                 </div>
             </div>
         </soundcloud-player>
-        <script type="module" src="/src/main.ts"></script>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
     </body>
 </html>
