@@ -1,5 +1,8 @@
 export class EventManager {
-    public static sendEvent<EventDetailsType>(type: string, details?: EventDetailsType,): boolean {
+    public static sendEvent<EventDetailsType>(
+        type: string,
+        details?: EventDetailsType,
+    ): boolean {
         return dispatchEvent(new CustomEvent(type, { detail: details ?? {} }));
     }
 

@@ -23,7 +23,9 @@ export class SoundcloudPlayer extends HTMLElement {
         this.titleContainer = this.querySelector('[data-title]');
         this.playButton = this.querySelector('soundcloud-player-play');
         this.stopButton = this.querySelector('soundcloud-player-stop');
-        this.selectTracks = this.querySelectorAll('soundcloud-player-select-track');
+        this.selectTracks = this.querySelectorAll(
+            'soundcloud-player-select-track',
+        );
         this.progress = this.querySelectorAll('[data-progress]');
         this.background = this.querySelector('[data-background]');
         this.time = this.querySelector('[data-time]');
@@ -53,7 +55,9 @@ export class SoundcloudPlayer extends HTMLElement {
         });
 
         this.stopButton?.addEventListener('click', () => {
-            EventManager.sendEvent(this.soundcloudInstance.getEvent('track.pause'));
+            EventManager.sendEvent(
+                this.soundcloudInstance.getEvent('track.pause'),
+            );
         });
 
         this.time?.addEventListener('input', () => {
@@ -64,19 +68,18 @@ export class SoundcloudPlayer extends HTMLElement {
             this.soundcloudInstance.soundcloud.seekTo(newTime);
         });
 
-
         this.selectTracks.forEach((el) => {
             el.addEventListener('click', () => {
                 EventManager.sendEvent(
                     this.soundcloudInstance.getEvent('track.skip'),
                     el.dataset.trackId,
                 );
-                console.log(this.soundcloudInstance.currentTrack)
+                console.log(this.soundcloudInstance.currentTrack);
                 // EventManager.sendEvent(
                 //     this.soundcloudInstance.getEvent('track.play'),
                 // );
             });
-        })
+        });
     }
 
     private initSoundcloud(): void {

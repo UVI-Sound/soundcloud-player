@@ -1,15 +1,12 @@
 import { defineConfig } from 'vite';
 
-
-
-
 export default defineConfig(() => {
-    return  {
+    return {
         build: {
             target: 'es2017',
-            sourcemap: true
+            sourcemap: true,
         },
         plugins: [],
-        modernPolyfills: true
+        modernPolyfills: true,
     };
 });

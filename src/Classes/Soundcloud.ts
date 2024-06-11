@@ -40,7 +40,6 @@ const scWindow = window as unknown as {
     };
 };
 
-
 export class Soundcloud {
     soundcloud!: SoundcloudType;
     currentTrack: TrackType;
@@ -64,16 +63,17 @@ export class Soundcloud {
      */
 
     init(): void {
-
-        this.iframe.allow ="autoplay";
-        this.iframe.src ='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + this.options.trackId;
+        this.iframe.allow = 'autoplay';
+        this.iframe.src =
+            'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
+            this.options.trackId;
 
         hideIframe(this.iframe);
         loadScript('https://w.soundcloud.com/player/api.js', () => {
             this.soundcloud = scWindow.SC.Widget(this.iframe);
             this.soundcloud.bind('ready', () => {
                 this.soundcloud.getSounds((sounds) => {
-                    console.log(sounds)
+                    console.log(sounds);
                     const tracks = sounds.filter((sound) =>
                         Object.prototype.hasOwnProperty.call(sound, 'title'),
                     );
@@ -122,11 +122,13 @@ export class Soundcloud {
         EventManager.listenEvent(this.getEvent('track.time'), (ms: number) => {
             this.soundcloud.seekTo(ms);
         });
-        EventManager.listenEvent(this.getEvent('track.skip'), (detail, event) => {
-            // console.log(detail);
-            this.soundcloud.skip(detail)
-        })
-
+        EventManager.listenEvent(
+            this.getEvent('track.skip'),
+            (detail, event) => {
+                // console.log(detail);
+                this.soundcloud.skip(detail);
+            },
+        );
     }
 
     public getEvent(type: ScEventTypes): string {

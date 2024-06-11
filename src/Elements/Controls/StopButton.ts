@@ -4,7 +4,6 @@ export class SoundcloudStop extends HTMLElement {
     }
 }
 
-
 if (customElements.get('soundcloud-player-stop') !== null) {
     customElements.define('soundcloud-player-stop', SoundcloudStop);
 }
