@@ -1,36 +1,36 @@
-import { SCService } from '../Classes/SCService.ts';
+import { SCService, type TrackType } from '../Classes/SCService.ts';
 import { uuid } from '../utils/uuid.ts';
 import { EventManager } from '../Classes/EventManager.ts';
-import { type SCSelectTrack } from './Controls/SCSelectTrack.ts';
 import { type SCPlay } from './Controls/SCPlay.ts';
 import { type SCStop } from './Controls/SCStop.ts';
+import { type SCSelectTrack } from './Controls/SCSelectTrack.ts';
+import { type SCWhenTrackPlaying } from './Controls/SCWhenTrackPlaying.ts';
 
 export class SCPlayer extends HTMLElement {
-    playButton?: SCPlay | null;
-    stopButton?: SCStop | null;
-    selectTracks: NodeListOf<SCSelectTrack> | undefined;
-    // progress: NodeListOf<HTMLElement>;
+    playButton!: SCPlay | null;
+    stopButton!: SCStop | null;
+    selectTracks!: NodeListOf<SCSelectTrack>;
     soundcloudInstance!: SCService;
+    whenTrackPlaying!: NodeListOf<SCWhenTrackPlaying>;
     iframePlayer!: HTMLIFrameElement;
-    // background!: HTMLImageElement | null;
-    // time: HTMLInputElement | null;
+
     uuid: string | undefined;
-    trackId?: string | null;
+    playlistId?: string | null;
+    playlistTrackIds: number[] = [];
 
     connectedCallback(): void {
         this.uuid = uuid();
-        this.trackId = this.getAttribute('track-id');
+        this.playlistId = this.getAttribute('playlist');
 
         if (!this.initSoundcloud()) {
             console.warn('Cant init soundcloud player');
             return;
         }
 
-        this.playButton = this.querySelector('soundcloud-player-play');
-        this.stopButton = this.querySelector('soundcloud-player-stop');
-        this.selectTracks = this.querySelectorAll(
-            'soundcloud-player-select-track',
-        );
+        this.playButton = this.querySelector('sc-play');
+        this.stopButton = this.querySelector('sc-stop');
+        this.selectTracks = this.querySelectorAll('sc-select-track');
+        this.whenTrackPlaying = this.querySelectorAll('sc-when-track-playing');
         // this.progress = this.querySelectorAll('[data-progress]');
         // this.background = this.querySelector('[data-background]');
         // this.time = this.querySelector('[data-time]');
@@ -53,9 +53,21 @@ export class SCPlayer extends HTMLElement {
             this.handleTrackProgress.bind(this),
         );
 
+        EventManager.listenEvent(
+            this.soundcloudInstance.getEvent('playlist.tracks.changed'),
+            (tracks: TrackType[]) => {
+                this.playlistTrackIds = tracks.map((track): number =>
+                    track.id ? track.id : -1,
+                );
+            },
+        );
+
         this.playButton?.attachPlayer(this).bindEvents();
         this.stopButton?.attachPlayer(this).bindEvents();
         this.selectTracks?.forEach((el: SCSelectTrack) => {
+            el.attachPlayer(this).bindEvents();
+        });
+        this.whenTrackPlaying?.forEach((el: SCWhenTrackPlaying) => {
             el.attachPlayer(this).bindEvents();
         });
 
@@ -69,7 +81,7 @@ export class SCPlayer extends HTMLElement {
     }
 
     private initSoundcloud(): boolean {
-        if (!(this.uuid && this.trackId)) {
+        if (!(this.uuid && this.playlistId)) {
             return false;
         }
 
@@ -77,7 +89,7 @@ export class SCPlayer extends HTMLElement {
         document.body.appendChild(this.iframePlayer);
 
         this.soundcloudInstance = new SCService(this.iframePlayer, this.uuid, {
-            trackId: this.trackId,
+            trackId: this.playlistId,
         });
         this.soundcloudInstance.init();
         return true;
@@ -97,6 +109,15 @@ export class SCPlayer extends HTMLElement {
         //     obj[propertyArray[propertyArray.length - 1]] =
         //         this.soundcloudInstance.currentTrack.percentPlayed.toString();
         // });
+    }
+
+    getCurrentTrackIndex(): number {
+        if (!this.soundcloudInstance.currentTrack.id) {
+            return -1;
+        }
+        return this.playlistTrackIds.indexOf(
+            this.soundcloudInstance.currentTrack.id,
+        );
     }
 
     // private handleTrackChanged(newTrack: TrackType): void {

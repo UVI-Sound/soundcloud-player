@@ -1,8 +1,7 @@
 import { SCPlayer } from '../SCPlayer.ts';
 import { EventManager } from '../../Classes/EventManager.ts';
-import SCPlayerDependant from './SCPlayerDependant.ts';
 
-export class SCStop extends HTMLElement implements SCPlayerDependant {
+export class SCStop extends HTMLElement {
     private player: SCPlayer | null = null;
 
     constructor() {
@@ -27,6 +26,6 @@ export class SCStop extends HTMLElement implements SCPlayerDependant {
     }
 }
 
-if (customElements.get('soundcloud-player-stop') !== null) {
-    customElements.define('soundcloud-player-stop', SCStop);
+if (customElements.get('sc-stop') !== null) {
+    customElements.define('sc-stop', SCStop);
 }

@@ -40,15 +40,13 @@ class p extends HTMLElement {
         super();
     }
 }
-customElements.get('soundcloud-player-play') !== null &&
-    customElements.define('soundcloud-player-play', p);
+customElements.get('sc-play') !== null && customElements.define('sc-play', p);
 class m extends HTMLElement {
     constructor() {
         super();
     }
 }
-customElements.get('soundcloud-player-stop') !== null &&
-    customElements.define('soundcloud-player-stop', m);
+customElements.get('sc-stop') !== null && customElements.define('sc-stop', m);
 const g = (s, t) => {
     if (
         [].slice
@@ -178,9 +176,9 @@ class v extends HTMLElement {
         (this.uuid = E()),
             this.initSoundcloud(),
             (this.titleContainer = this.querySelector('[data-title]')),
-            (this.playButton = this.querySelector('soundcloud-player-play')),
+            (this.playButton = this.querySelector('sc-play')),
             console.log(this.playButton),
-            (this.stopButton = this.querySelector('soundcloud-player-stop')),
+            (this.stopButton = this.querySelector('sc-stop')),
             (this.progress = this.querySelectorAll('[data-progress]')),
             (this.background = this.querySelector('[data-background]')),
             (this.time = this.querySelector('[data-time]')),

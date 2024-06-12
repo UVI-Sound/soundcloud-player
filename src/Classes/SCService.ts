@@ -7,6 +7,7 @@ export interface TrackType {
     duration: number;
     percentPlayed: number;
     artwork_url: string;
+    id?: number;
 }
 
 export interface SoundcloudType {
@@ -16,6 +17,7 @@ export interface SoundcloudType {
     pause: () => void;
     seekTo: (ms: number) => void;
     skip: (soundIndex: number) => void;
+    getCurrentSound: (callback: (currentSound: TrackType) => void) => void;
 }
 
 export interface ScOptionsType {
@@ -24,17 +26,22 @@ export interface ScOptionsType {
 
 export type ScEventTypes =
     | 'track.play'
+    | 'track.start-playing'
+    | 'track.stop-playing'
     | 'track.changed'
     | 'track.pause'
     | 'track.progressed'
     | 'track.time'
-    | 'track.skip';
+    | 'track.skip'
+    | 'playlist.tracks.changed';
 
 const scWindow = window as unknown as {
     SC: {
         Widget: ((iframe: HTMLIFrameElement) => SoundcloudType) & {
             Events: {
+                PLAY: string;
                 PLAY_PROGRESS: string;
+                PAUSE: string;
             };
         };
     };
@@ -69,11 +76,11 @@ export class SCService {
         loadScript('https://w.soundcloud.com/player/api.js', () => {
             this.soundcloud = scWindow.SC.Widget(this.iframe);
             this.soundcloud.bind('ready', () => {
-                this.soundcloud.getSounds((sounds) => {
-                    console.log(sounds);
+                this.soundcloud.getSounds((sounds: TrackType[]) => {
                     const tracks = sounds.filter((sound) =>
                         Object.prototype.hasOwnProperty.call(sound, 'title'),
                     );
+                    this.changePlaylistTrackIds(tracks);
                     this.trackChanged(tracks[0]);
                 });
             });
@@ -83,6 +90,12 @@ export class SCService {
                     this.trackProgressed(progress.currentPosition);
                 },
             );
+            this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY, () => {
+                EventManager.sendEvent(this.getEvent('track.start-playing'));
+            });
+            this.soundcloud.bind(scWindow.SC.Widget.Events.PAUSE, () => {
+                EventManager.sendEvent(this.getEvent('track.stop-playing'));
+            });
         });
     }
 
@@ -94,6 +107,13 @@ export class SCService {
     private trackChanged(track: TrackType): void {
         this.currentTrack = track;
         EventManager.sendEvent(this.getEvent('track.changed'), track);
+    }
+
+    private changePlaylistTrackIds(tracks: TrackType[]): void {
+        EventManager.sendEvent(
+            this.getEvent('playlist.tracks.changed'),
+            tracks,
+        );
     }
 
     /**
@@ -123,6 +143,7 @@ export class SCService {
             this.getEvent('track.skip'),
             (index: number) => {
                 this.soundcloud.skip(index);
+                this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
             },
         );
     }

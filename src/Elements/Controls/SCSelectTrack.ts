@@ -1,4 +1,3 @@
-import SCPlayerDependant from './SCPlayerDependant.ts';
 import { SCPlayer } from '../SCPlayer.ts';
 import { EventManager } from '../../Classes/EventManager.ts';
 
@@ -7,7 +6,7 @@ type TSelectTrackOptions = {
     autoPlay?: boolean;
 };
 
-export class SCSelectTrack extends HTMLElement implements SCPlayerDependant {
+export class SCSelectTrack extends HTMLElement {
     private player: SCPlayer | null = null;
     private options: TSelectTrackOptions;
 
@@ -26,7 +25,6 @@ export class SCSelectTrack extends HTMLElement implements SCPlayerDependant {
         options.autoPlay = autoPlay !== null;
 
         this.options = options;
-        console.log(this.options);
     }
 
     attachPlayer(player: SCPlayer) {
@@ -51,6 +49,6 @@ export class SCSelectTrack extends HTMLElement implements SCPlayerDependant {
     }
 }
 
-if (customElements.get('soundcloud-player-select-track') !== null) {
-    customElements.define('soundcloud-player-select-track', SCSelectTrack);
+if (customElements.get('sc-select-track') !== null) {
+    customElements.define('sc-select-track', SCSelectTrack);
 }

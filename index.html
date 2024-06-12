@@ -8,39 +8,101 @@
     </head>
     <body>
         <div>
-            <soundcloud-player track-id="1836355533">
+            <soundcloud-player
+                playlist="1836355533"
+                style="
+                    width: 50vw;
+                    height: 50vh;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    border: 1px solid black;
+                "
+            >
                 <div
                     style="
-                        width: 50vw;
+                        width: 25%;
                         display: flex;
-                        flex-wrap: wrap;
+                        flex-direction: column;
                         justify-content: space-around;
+                        align-content: space-around;
                     "
                 >
-                    <div style="width: 100%">
-                        <div>GUITARE</div>
-                    </div>
-                    <div style="width: 100%">
-                        <soundcloud-player-play> play </soundcloud-player-play>
-                    </div>
-
-                    <div style="width: 100%">
-                        <soundcloud-player-select-track track-id="3" autoplay>
-                            DRY
-                        </soundcloud-player-select-track>
-                        <soundcloud-player-select-track track-id="0">
+                    <button type="button">GUITARE</button>
+                    <button type="button">DRUM</button>
+                    <button type="button">BASS</button>
+                    <button type="button">KEY</button>
+                    <button type="button">Vocal</button>
+                </div>
+                <div
+                    style="
+                        width: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-content: space-between;
+                        flex-wrap: wrap;
+                    "
+                >
+                    <div
+                        style="
+                            width: 100%;
+                            height: 90%;
+                            display: flex;
+                            justify-content: center;
+                            align-content: center;
+                        "
+                    >
+                        <sc-when-track-playing track-id="0" no-initial-hide>
                             CHORUS
-                        </soundcloud-player-select-track>
-                        <soundcloud-player-select-track track-id="1">
+                        </sc-when-track-playing>
+                        <sc-when-track-playing track-id="1">
                             COLOR
-                        </soundcloud-player-select-track>
-                        <soundcloud-player-select-track track-id="2">
+                        </sc-when-track-playing>
+                        <sc-when-track-playing track-id="2">
                             DELAY
-                        </soundcloud-player-select-track>
-                        <soundcloud-player-select-track track-id="4">
+                        </sc-when-track-playing>
+                        <sc-when-track-playing track-id="3">
+                            DRY
+                        </sc-when-track-playing>
+                        <sc-when-track-playing track-id="4">
                             FLANGER
-                        </soundcloud-player-select-track>
+                        </sc-when-track-playing>
                     </div>
+                    <sc-when-track-playing>
+                        <sc-stop>Pause</sc-stop>
+                    </sc-when-track-playing>
+                    <sc-when-track-playing inverted no-initial-hide>
+                        <sc-play>Play</sc-play>
+                    </sc-when-track-playing>
+                </div>
+                <div
+                    style="
+                        width: 25%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        align-content: space-around;
+                    "
+                >
+                    <sc-select-track track-id="0">
+                        <button type="button" style="width: 100%">
+                            CHORUS
+                        </button>
+                    </sc-select-track>
+                    <sc-select-track track-id="1">
+                        <button type="button" style="width: 100%">COLOR</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="2">
+                        <button type="button" style="width: 100%">DELAY</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="3" autoplay>
+                        <button type="button" style="width: 100%">DRY</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="4">
+                        <button type="button" style="width: 100%">
+                            FLANGER
+                        </button>
+                    </sc-select-track>
                 </div>
             </soundcloud-player>
         </div>
