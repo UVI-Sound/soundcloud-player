@@ -3,7 +3,6 @@ import { EventManager } from '../../Classes/EventManager.ts';
 
 type TSelectTrackOptions = {
     trackId?: number;
-    autoPlay?: boolean;
 };
 
 export class SCSelectTrack extends HTMLElement {
@@ -19,10 +18,8 @@ export class SCSelectTrack extends HTMLElement {
         const options: TSelectTrackOptions = {};
 
         const trackId = this.getAttribute('track-id');
-        const autoPlay = this.getAttribute('autoplay');
 
         options.trackId = trackId ? parseInt(trackId) : undefined;
-        options.autoPlay = autoPlay !== null;
 
         this.options = options;
     }

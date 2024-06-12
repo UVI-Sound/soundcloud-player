@@ -3,7 +3,7 @@ import { EventManager } from '../../Classes/EventManager.ts';
 
 type TSCWhenTrackPlayingOptions = {
     // Index of the track in the playlist
-    trackId?: number;
+    trackIds?: number[];
 
     // If the track isn't playing then show it
     inverted?: boolean;
@@ -33,9 +33,15 @@ export class SCWhenTrackPlaying extends HTMLElement {
         const inverted = this.getAttribute('inverted');
         const noInitialHide = this.getAttribute('no-initial-hide');
 
-        options.trackId = trackId ? parseInt(trackId) : undefined;
+
+        options.trackIds = trackId ? JSON.parse(trackId) : undefined;
         options.inverted = inverted !== null;
         options.initialHide = !(noInitialHide !== null);
+
+        if (options.trackIds !== undefined && !Array.isArray(options.trackIds)) {
+            options.trackIds = [options.trackIds];
+        }
+
 
         this.options = options;
     }
@@ -55,7 +61,7 @@ export class SCWhenTrackPlaying extends HTMLElement {
             return;
         }
 
-        if (this.options.trackId === undefined) {
+        if (this.options.trackIds === undefined) {
             EventManager.listenEvent(
                 this.player.soundcloudInstance.getEvent('track.start-playing'),
                 () => {
@@ -91,8 +97,7 @@ export class SCWhenTrackPlaying extends HTMLElement {
     }
 
     withTrackIdCallback() {
-        const sameTrack =
-            this.options.trackId === this.player?.getCurrentTrackIndex();
+        const sameTrack = this.options.trackIds?.includes(this.player?.getCurrentTrackIndex() ?? -1);
         let display = this.options.inverted ? !sameTrack : sameTrack;
         this.style.display = display ? 'block' : 'none';
     }

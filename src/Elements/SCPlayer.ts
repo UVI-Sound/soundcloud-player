@@ -15,12 +15,14 @@ export class SCPlayer extends HTMLElement {
     iframePlayer!: HTMLIFrameElement;
 
     uuid: string | undefined;
-    playlistId?: string | null;
+    playlistId!: string | null;
+    playlistSecret!: string | null;
     playlistTrackIds: number[] = [];
 
     connectedCallback(): void {
         this.uuid = uuid();
-        this.playlistId = this.getAttribute('playlist');
+        this.playlistId = this.getAttribute('playlist') ?? null;
+        this.playlistSecret = this.getAttribute('secret') ?? null;
 
         if (!this.initSoundcloud()) {
             console.warn('Cant init soundcloud player');
@@ -90,6 +92,7 @@ export class SCPlayer extends HTMLElement {
 
         this.soundcloudInstance = new SCService(this.iframePlayer, this.uuid, {
             trackId: this.playlistId,
+            secret: this.playlistSecret,
         });
         this.soundcloudInstance.init();
         return true;
@@ -113,6 +116,7 @@ export class SCPlayer extends HTMLElement {
 
     getCurrentTrackIndex(): number {
         if (!this.soundcloudInstance.currentTrack.id) {
+            console.log(this.soundcloudInstance.currentTrack.id)
             return -1;
         }
         return this.playlistTrackIds.indexOf(

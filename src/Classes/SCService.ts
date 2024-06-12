@@ -54,7 +54,7 @@ export class SCService {
     constructor(
         private readonly iframe: HTMLIFrameElement,
         private readonly elementUuid: string,
-        private readonly options: ScOptionsType,
+        private readonly options: { trackId: string; secret: string | null },
     ) {
         this.currentTrack = {
             title: '',
@@ -70,18 +70,15 @@ export class SCService {
         this.iframe.src =
             'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
             this.options.trackId +
-            '%3Fsecret_token%3Ds-0j1baSmbbsa';
+            '%3Fsecret_token%3' + this.options.secret;
 
         hideIframe(this.iframe);
         loadScript('https://w.soundcloud.com/player/api.js', () => {
             this.soundcloud = scWindow.SC.Widget(this.iframe);
             this.soundcloud.bind('ready', () => {
                 this.soundcloud.getSounds((sounds: TrackType[]) => {
-                    const tracks = sounds.filter((sound) =>
-                        Object.prototype.hasOwnProperty.call(sound, 'title'),
-                    );
-                    this.changePlaylistTrackIds(tracks);
-                    this.trackChanged(tracks[0]);
+                    this.changePlaylistTrackIds(sounds);
+                    this.trackChanged(sounds[0]);
                 });
             });
             this.soundcloud.bind(
@@ -141,11 +138,13 @@ export class SCService {
         });
         EventManager.listenEvent(
             this.getEvent('track.skip'),
-            (index: number) => {
-                this.soundcloud.skip(index);
-                this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
-            },
+            this.skipTo.bind(this),
         );
+    }
+
+    public skipTo(index: number): void {
+        this.soundcloud.skip(index);
+        this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
     }
 
     public getEvent(type: ScEventTypes): string {

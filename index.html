@@ -9,7 +9,8 @@
     <body>
         <div>
             <soundcloud-player
-                playlist="1836355533"
+                playlist="1836473109"
+                secret="Ds-SGKu0MyjOV9"
                 style="
                     width: 50vw;
                     height: 50vh;
@@ -28,11 +29,8 @@
                         align-content: space-around;
                     "
                 >
-                    <button type="button">GUITARE</button>
-                    <button type="button">DRUM</button>
-                    <button type="button">BASS</button>
-                    <button type="button">KEY</button>
-                    <button type="button">Vocal</button>
+                    <button type="button" id="guitare">GUITARE</button>
+                    <button type="button" id="drum">DRUM</button>
                 </div>
                 <div
                     style="
@@ -52,19 +50,19 @@
                             align-content: center;
                         "
                     >
-                        <sc-when-track-playing track-id="0" no-initial-hide>
-                            CHORUS
-                        </sc-when-track-playing>
-                        <sc-when-track-playing track-id="1">
-                            COLOR
-                        </sc-when-track-playing>
-                        <sc-when-track-playing track-id="2">
-                            DELAY
-                        </sc-when-track-playing>
-                        <sc-when-track-playing track-id="3">
+                        <sc-when-track-playing track-id="[0, 5]"  no-initial-hide>
                             DRY
                         </sc-when-track-playing>
-                        <sc-when-track-playing track-id="4">
+                        <sc-when-track-playing track-id="[1, 6]">
+                            CHORUS
+                        </sc-when-track-playing>
+                        <sc-when-track-playing track-id="[2, 7]">
+                            COLOR
+                        </sc-when-track-playing>
+                        <sc-when-track-playing track-id="[3, 8]">
+                            DELAY
+                        </sc-when-track-playing>
+                        <sc-when-track-playing track-id="[4, 9]">
                             FLANGER
                         </sc-when-track-playing>
                     </div>
@@ -76,6 +74,7 @@
                     </sc-when-track-playing>
                 </div>
                 <div
+                    id="guitare-control"
                     style="
                         width: 25%;
                         display: flex;
@@ -85,27 +84,90 @@
                     "
                 >
                     <sc-select-track track-id="0">
-                        <button type="button" style="width: 100%">
-                            CHORUS
-                        </button>
-                    </sc-select-track>
-                    <sc-select-track track-id="1">
-                        <button type="button" style="width: 100%">COLOR</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="2">
-                        <button type="button" style="width: 100%">DELAY</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="3" autoplay>
                         <button type="button" style="width: 100%">DRY</button>
                     </sc-select-track>
+                    <sc-select-track track-id="1">
+                        <button type="button" style="width: 100%">CHORUS</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="2">
+                        <button type="button" style="width: 100%">COLOR</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="3">
+                        <button type="button" style="width: 100%">DELAY</button>
+                    </sc-select-track>
                     <sc-select-track track-id="4">
-                        <button type="button" style="width: 100%">
-                            FLANGER
-                        </button>
+                        <button type="button" style="width: 100%">FLANGER</button>
                     </sc-select-track>
                 </div>
+                <div
+                    id="drum-control"
+                    style="
+                        width: 25%;
+                        display: none;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        align-content: space-around;
+                    "
+                >
+                    <sc-select-track track-id="5">
+                        <button type="button" style="width: 100%">DRY</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="6">
+                        <button type="button" style="width: 100%">CHORUS</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="7">
+                        <button type="button" style="width: 100%">COLOR</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="8">
+                        <button type="button" style="width: 100%">DELAY</button>
+                    </sc-select-track>
+                    <sc-select-track track-id="9">
+                        <button type="button" style="width: 100%">FLANGER</button>
+                    </sc-select-track>
+                </div>
+
             </soundcloud-player>
         </div>
         <script type="module" src="/src/main.ts"></script>
+
+        <script>
+            /**
+             *
+             * @type {SCPlayer}
+             */
+            const player = document.querySelector('soundcloud-player');
+
+            const drum = document.getElementById('drum');
+            const guitare = document.getElementById('guitare');
+
+            [drum, guitare].forEach(el => el.addEventListener('click', ({target}) => {
+                hideOthers(target)
+            }));
+
+            function hideOthers(el) {
+               [drum, guitare]
+                   .filter(other => other.id !== el.id)
+                   .forEach(other => {
+                       const controlId = other.id + '-control';
+                       const control = document.getElementById(controlId);
+                       control.style.display = 'none';
+                   });
+               document.getElementById(el.id + '-control').style.display = 'flex';
+               playPreviousEffectWithNewSound(el.id);
+
+            }
+
+            function playPreviousEffectWithNewSound(kind) {
+                const currentIndex = (player.getCurrentTrackIndex() % 5);
+                const toPlay = getControls(kind + '-control')[currentIndex];
+                const trackId = toPlay.getAttribute('track-id');
+                player.soundcloudInstance.skipTo(trackId);
+            }
+
+            function getControls(kind) {
+                return document.querySelectorAll(`#${kind} sc-select-track`);
+            }
+
+        </script>
     </body>
 </html>
