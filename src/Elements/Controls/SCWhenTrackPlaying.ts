@@ -33,15 +33,16 @@ export class SCWhenTrackPlaying extends HTMLElement {
         const inverted = this.getAttribute('inverted');
         const noInitialHide = this.getAttribute('no-initial-hide');
 
-
         options.trackIds = trackId ? JSON.parse(trackId) : undefined;
         options.inverted = inverted !== null;
         options.initialHide = !(noInitialHide !== null);
 
-        if (options.trackIds !== undefined && !Array.isArray(options.trackIds)) {
+        if (
+            options.trackIds !== undefined &&
+            !Array.isArray(options.trackIds)
+        ) {
             options.trackIds = [options.trackIds];
         }
-
 
         this.options = options;
     }
@@ -97,7 +98,9 @@ export class SCWhenTrackPlaying extends HTMLElement {
     }
 
     withTrackIdCallback() {
-        const sameTrack = this.options.trackIds?.includes(this.player?.getCurrentTrackIndex() ?? -1);
+        const sameTrack = this.options.trackIds?.includes(
+            this.player?.getCurrentTrackIndex() ?? -1,
+        );
         let display = this.options.inverted ? !sameTrack : sameTrack;
         this.style.display = display ? 'block' : 'none';
     }

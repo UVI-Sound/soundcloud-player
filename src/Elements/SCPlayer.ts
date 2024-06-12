@@ -116,7 +116,7 @@ export class SCPlayer extends HTMLElement {
 
     getCurrentTrackIndex(): number {
         if (!this.soundcloudInstance.currentTrack.id) {
-            console.log(this.soundcloudInstance.currentTrack.id)
+            console.log(this.soundcloudInstance.currentTrack.id);
             return -1;
         }
         return this.playlistTrackIds.indexOf(

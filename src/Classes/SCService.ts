@@ -70,7 +70,8 @@ export class SCService {
         this.iframe.src =
             'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
             this.options.trackId +
-            '%3Fsecret_token%3' + this.options.secret;
+            '%3Fsecret_token%3' +
+            this.options.secret;
 
         hideIframe(this.iframe);
         loadScript('https://w.soundcloud.com/player/api.js', () => {
