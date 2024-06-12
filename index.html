@@ -8,52 +8,38 @@
     </head>
     <body>
         <div>
-            <soundcloud-player track-id="1823148186">
-                <div style="width: 10vw">
-                    <label
-                        style="
-                            width: 100%;
-                            display: flex;
-                            justify-content: center;
-                        "
-                    >
-                        <input
-                            type="range"
-                            value="0"
-                            min="0"
-                            max="100"
-                            step="0.01"
-                            data-progress="value"
-                            data-time
-                        />
-                    </label>
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-around;
-                            width: 100%;
-                        "
-                    >
-                        <button type="button" style="margin-right: 20px">
-                            <soundcloud-player-play>
-                                play
-                            </soundcloud-player-play>
-                        </button>
-                        <button type="button" style="margin-right: 20px">
-                            <soundcloud-player-select-track data-track-id="0">
-                                Preset 1
-                            </soundcloud-player-select-track>
-                        </button>
-                        <button type="button" style="margin-right: 20px">
-                            <soundcloud-player-select-track data-track-id="1">
-                                Preset 2
-                            </soundcloud-player-select-track>
-                        </button>
-                        <button type="button" style="margin-right: 20px">
-                            <soundcloud-player-select-track data-track-id="2">
-                                Preset 3
-                            </soundcloud-player-select-track>
-                        </button>
+            <soundcloud-player track-id="1836355533">
+                <div
+                    style="
+                        width: 50vw;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: space-around;
+                    "
+                >
+                    <div style="width: 100%">
+                        <div>GUITARE</div>
+                    </div>
+                    <div style="width: 100%">
+                        <soundcloud-player-play> play </soundcloud-player-play>
+                    </div>
+
+                    <div style="width: 100%">
+                        <soundcloud-player-select-track track-id="3" autoplay>
+                            DRY
+                        </soundcloud-player-select-track>
+                        <soundcloud-player-select-track track-id="0">
+                            CHORUS
+                        </soundcloud-player-select-track>
+                        <soundcloud-player-select-track track-id="1">
+                            COLOR
+                        </soundcloud-player-select-track>
+                        <soundcloud-player-select-track track-id="2">
+                            DELAY
+                        </soundcloud-player-select-track>
+                        <soundcloud-player-select-track track-id="4">
+                            FLANGER
+                        </soundcloud-player-select-track>
                     </div>
                 </div>
             </soundcloud-player>

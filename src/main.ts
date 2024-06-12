@@ -1,5 +1,5 @@
 import './style.scss';
-import './Elements/Controls/PlayButton.ts';
-import './Elements/Controls/StopButton.ts';
-import './Elements/Controls/SelectTrack.ts';
-import './Elements/SoundcloudPlayer.ts';
+import './Elements/Controls/SCPlay.ts';
+import './Elements/Controls/SCStop.ts';
+import './Elements/Controls/SCSelectTrack.ts';
+import './Elements/SCPlayer.ts';

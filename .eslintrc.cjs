@@ -21,5 +21,6 @@ module.exports = {
     },
     rules: {
         '@typescript-eslint/no-extraneous-class': 'off',
+        '@typescript-eslint/strict-boolean-expressions': 'off',
     },
 };

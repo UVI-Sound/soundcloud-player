@@ -40,7 +40,7 @@ const scWindow = window as unknown as {
     };
 };
 
-export class Soundcloud {
+export class SCService {
     soundcloud!: SoundcloudType;
     currentTrack: TrackType;
 
@@ -58,15 +58,12 @@ export class Soundcloud {
         this.bindEvents();
     }
 
-    /**
-     * https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1844874132%3Fsecret_token%3Ds-2NlVXCYSTCW&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true
-     */
-
     init(): void {
         this.iframe.allow = 'autoplay';
         this.iframe.src =
             'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
-            this.options.trackId;
+            this.options.trackId +
+            '%3Fsecret_token%3Ds-0j1baSmbbsa';
 
         hideIframe(this.iframe);
         loadScript('https://w.soundcloud.com/player/api.js', () => {
@@ -124,9 +121,8 @@ export class Soundcloud {
         });
         EventManager.listenEvent(
             this.getEvent('track.skip'),
-            (detail, event) => {
-                // console.log(detail);
-                this.soundcloud.skip(detail);
+            (index: number) => {
+                this.soundcloud.skip(index);
             },
         );
     }
