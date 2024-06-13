@@ -20,9 +20,6 @@ export interface SoundcloudType {
     getCurrentSound: (callback: (currentSound: TrackType) => void) => void;
 }
 
-export interface ScOptionsType {
-    trackId: string;
-}
 
 export type ScEventTypes =
     | 'track.play'
@@ -33,7 +30,8 @@ export type ScEventTypes =
     | 'track.progressed'
     | 'track.time'
     | 'track.skip'
-    | 'playlist.tracks.changed';
+    | 'playlist.tracks.changed'
+    | 'sc.ready';
 
 const scWindow = window as unknown as {
     SC: {
@@ -70,13 +68,13 @@ export class SCService {
         this.iframe.src =
             'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
             this.options.trackId +
-            '%3Fsecret_token%3' +
-            this.options.secret;
+            (this.options.secret ? ('%3Fsecret_token%3' + this.options.secret) : '');
 
         hideIframe(this.iframe);
         loadScript('https://w.soundcloud.com/player/api.js', () => {
             this.soundcloud = scWindow.SC.Widget(this.iframe);
             this.soundcloud.bind('ready', () => {
+                EventManager.sendEvent(this.getEvent('sc.ready'));
                 this.soundcloud.getSounds((sounds: TrackType[]) => {
                     this.changePlaylistTrackIds(sounds);
                     this.trackChanged(sounds[0]);
