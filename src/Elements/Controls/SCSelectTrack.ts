@@ -48,7 +48,7 @@ export class SCSelectTrack extends HTMLElement {
 
         this.addEventListener('click', () => {
             EventService.sendEvent<TSCTrackSkipDetails>(
-                scInstance.getEvent('track.skip'),
+                scInstance.getEvent('track.change'),
                 {
                     index: this.options.trackId,
                     resetTime: this.options.withProgressionReset,

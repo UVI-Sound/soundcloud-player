@@ -6,13 +6,15 @@ import { type SCStop } from './Controls/SCStop.ts';
 import { type SCSelectTrack } from './Controls/SCSelectTrack.ts';
 import { type SCWhenTrackPlaying } from './Controls/SCWhenTrackPlaying.ts';
 import { type TSCPlaylistTracksChangedDetails } from '../Classes/SCServiceEvents.ts';
+import { type SCWhenTrackSelected } from './Controls/SCWhenTrackSelected.ts';
 
 export class SCPlayer extends HTMLElement {
     playButton!: SCPlay | null;
     stopButton!: SCStop | null;
     selectTracks!: NodeListOf<SCSelectTrack>;
-    soundcloudInstance!: SCService;
     whenTrackPlaying!: NodeListOf<SCWhenTrackPlaying>;
+    whenTrackSelected!: NodeListOf<SCWhenTrackSelected>;
+    soundcloudInstance!: SCService;
     iframePlayer!: HTMLIFrameElement;
 
     uuid: string | undefined;
@@ -34,6 +36,9 @@ export class SCPlayer extends HTMLElement {
         this.stopButton = this.querySelector('sc-stop');
         this.selectTracks = this.querySelectorAll('sc-select-track');
         this.whenTrackPlaying = this.querySelectorAll('sc-when-track-playing');
+        this.whenTrackSelected = this.querySelectorAll(
+            'sc-when-track-selected',
+        );
 
         this.bindEvents();
     }
@@ -56,6 +61,7 @@ export class SCPlayer extends HTMLElement {
         this.stopButton?.init(this);
         this.selectTracks?.forEach((el) => el.init(this));
         this.whenTrackPlaying?.forEach((el) => el.init(this));
+        this.whenTrackSelected?.forEach((el) => el.init(this));
     }
 
     private initSoundcloud(): boolean {

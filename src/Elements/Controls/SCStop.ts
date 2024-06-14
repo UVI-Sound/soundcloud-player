@@ -4,11 +4,6 @@ import { EventService } from '../../Classes/EventService.ts';
 export class SCStop extends HTMLElement {
     private player: SCPlayer | null = null;
 
-    attachPlayer(player: SCPlayer): this {
-        this.player = player;
-        return this;
-    }
-
     bindEvents(): this {
         if (!this.player) {
             console.warn('Cant init event without player attached');
@@ -17,13 +12,13 @@ export class SCStop extends HTMLElement {
         const scInstance = this.player.soundcloudInstance;
 
         this.addEventListener('click', () => {
-            EventService.sendEvent(scInstance.getEvent('track.pause'));
+            EventService.sendEvent(scInstance.getEvent('track.stop'));
         });
         return this;
     }
 
     init(player: SCPlayer): this {
-        this.attachPlayer(player);
+        this.player = player;
         return this.bindEvents();
     }
 }

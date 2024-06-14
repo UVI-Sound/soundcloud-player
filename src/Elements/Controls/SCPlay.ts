@@ -22,7 +22,7 @@ export class SCPlay extends HTMLElement {
         const scInstance = this.player.soundcloudInstance;
 
         this.addEventListener('click', () => {
-            EventService.sendEvent(scInstance.getEvent('track.play'));
+            EventService.sendEvent(scInstance.getEvent('track.start'));
         });
         return this;
     }
