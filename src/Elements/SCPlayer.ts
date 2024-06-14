@@ -1,10 +1,11 @@
-import { SCService, type TrackType } from '../Classes/SCService.ts';
+import { SCService } from '../Classes/SCService.ts';
 import { uuid } from '../utils/uuid.ts';
 import { EventManager } from '../Classes/EventManager.ts';
 import { type SCPlay } from './Controls/SCPlay.ts';
 import { type SCStop } from './Controls/SCStop.ts';
 import { type SCSelectTrack } from './Controls/SCSelectTrack.ts';
 import { type SCWhenTrackPlaying } from './Controls/SCWhenTrackPlaying.ts';
+import { type TSCPlaylistTracksChangedDetails } from '../Classes/SCServiceEvents.ts';
 
 export class SCPlayer extends HTMLElement {
     playButton!: SCPlay | null;
@@ -33,9 +34,6 @@ export class SCPlayer extends HTMLElement {
         this.stopButton = this.querySelector('sc-stop');
         this.selectTracks = this.querySelectorAll('sc-select-track');
         this.whenTrackPlaying = this.querySelectorAll('sc-when-track-playing');
-        // this.progress = this.querySelectorAll('[data-progress]');
-        // this.background = this.querySelector('[data-background]');
-        // this.time = this.querySelector('[data-time]');
 
         this.bindEvents();
     }
@@ -45,20 +43,10 @@ export class SCPlayer extends HTMLElement {
      * @private
      */
     private bindEvents(): void {
-        // EventManager.listenEvent<TrackType>(
-        //     this.soundcloudInstance.getEvent('track.changed'),
-        //     this.handleTrackChanged.bind(this),
-        // );
-
-        EventManager.listenEvent(
-            this.soundcloudInstance.getEvent('track.progressed'),
-            this.handleTrackProgress.bind(this),
-        );
-
-        EventManager.listenEvent(
+        EventManager.listenEvent<TSCPlaylistTracksChangedDetails>(
             this.soundcloudInstance.getEvent('playlist.tracks.changed'),
-            (tracks: TrackType[]) => {
-                this.playlistTrackIds = tracks.map((track): number =>
+            (detail) => {
+                this.playlistTrackIds = detail.tracks.map((track): number =>
                     track.id ? track.id : -1,
                 );
             },
@@ -72,14 +60,6 @@ export class SCPlayer extends HTMLElement {
         this.whenTrackPlaying?.forEach((el: SCWhenTrackPlaying) => {
             el.attachPlayer(this).bindEvents();
         });
-
-        // this.time?.addEventListener('input', () => {
-        //     const percentage = parseInt(this.time?.value ?? '0');
-        //     const newTime =
-        //         (percentage / 100) *
-        //         this.soundcloudInstance.currentTrack.duration;
-        //     this.soundcloudInstance.soundcloud.seekTo(newTime);
-        // });
     }
 
     private initSoundcloud(): boolean {
@@ -98,40 +78,14 @@ export class SCPlayer extends HTMLElement {
         return true;
     }
 
-    private handleTrackProgress(): void {
-        // this.progress.forEach((el) => {
-        //     const propertyArray = el.dataset.progress?.split('.') ?? [];
-        //     let obj = el;
-        //
-        //     for (let i = 0; i < propertyArray.length - 1; i++) {
-        //         // @ts-expect-error todo
-        //         obj = obj[propertyArray[i]];
-        //     }
-        //
-        //     // @ts-expect-error todo
-        //     obj[propertyArray[propertyArray.length - 1]] =
-        //         this.soundcloudInstance.currentTrack.percentPlayed.toString();
-        // });
-    }
-
     getCurrentTrackIndex(): number {
         if (!this.soundcloudInstance.currentTrack.id) {
-            console.log(this.soundcloudInstance.currentTrack.id);
             return -1;
         }
         return this.playlistTrackIds.indexOf(
             this.soundcloudInstance.currentTrack.id,
         );
     }
-
-    // private handleTrackChanged(newTrack: TrackType): void {
-    // if (this.titleContainer === null) return;
-    // this.titleContainer.innerHTML = newTrack.title;
-    //
-    // if (this.background === null) return;
-    //
-    // this.background.src = newTrack.artwork_url;
-    // }
 }
 
 if (customElements.get('soundcloud-player') !== null) {

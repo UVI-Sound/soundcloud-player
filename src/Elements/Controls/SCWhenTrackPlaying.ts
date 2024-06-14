@@ -1,7 +1,7 @@
-import { SCPlayer } from '../SCPlayer.ts';
+import { type SCPlayer } from '../SCPlayer.ts';
 import { EventManager } from '../../Classes/EventManager.ts';
 
-type TSCWhenTrackPlayingOptions = {
+interface TSCWhenTrackPlayingOptions {
     // Index of the track in the playlist
     trackIds?: number[];
 
@@ -9,7 +9,7 @@ type TSCWhenTrackPlayingOptions = {
     inverted?: boolean;
 
     initialHide?: boolean;
-};
+}
 
 export class SCWhenTrackPlaying extends HTMLElement {
     private player: SCPlayer | null = null;

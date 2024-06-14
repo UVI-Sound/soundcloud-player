@@ -1,4 +1,4 @@
-import { SCPlayer } from '../SCPlayer.ts';
+import { type SCPlayer } from '../SCPlayer.ts';
 import { EventManager } from '../../Classes/EventManager.ts';
 
 export class SCPlay extends HTMLElement {

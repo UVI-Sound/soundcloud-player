@@ -5,180 +5,301 @@
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Vite + TS</title>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
-    <script type="module" src="/src/main.ts"></script>
         <div>
             <soundcloud-player
                 playlist="1836473109"
                 secret="Ds-SGKu0MyjOV9"
-                style="
-                    width: 50vw;
-                    height: 50vh;
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-around;
-                    border: 1px solid black;
-                "
+                class="min-h-[500px] flex justify-center mb-0 py-40 bg-[linear-gradient(75deg,var(--tw-gradient-stops))] from-[#BB72E7] via-[#EEAAE7] to-[#A24AD3] background-animate"
             >
-                <div
-                    style="
-                        width: 25%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-around;
-                        align-content: space-around;
-                    "
-                >
-                    <button type="button" id="guitare">GUITARE</button>
-                    <button type="button" id="drum">DRUM</button>
-                </div>
-                <div
-                    style="
-                        width: 50%;
-                        display: flex;
-                        justify-content: center;
-                        align-content: space-between;
-                        flex-wrap: wrap;
-                    "
-                >
-                    <div
-                        style="
-                            width: 100%;
-                            height: 90%;
-                            display: flex;
-                            justify-content: center;
-                            align-content: center;
-                        "
-                    >
+                <div class="flex flex-col gap-y-20">
+                    <div class="text-4xl">
+                        <div
+                            class="flex justify-center gap-x-12"
+                            id="guitare-control"
+                            data-text-color="#BC73E8"
+                        >
+                            <sc-select-track
+                                track-id="0"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                >Dry</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="4"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Flanger</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="3"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Delay</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="2"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Color</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="1"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Chorus</sc-select-track
+                            >
+                        </div>
+                        <div
+                            class="hidden justify-center gap-x-12"
+                            id="drum-control"
+                            data-text-color="#BC73E8"
+                        >
+                            <sc-select-track
+                                track-id="5"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                >Dry</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="9"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Flanger</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="8"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Delay</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="7"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Color</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="6"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Chorus</sc-select-track
+                            >
+                        </div>
+                        <div
+                            class="hidden justify-center gap-x-12"
+                            id="bass-control"
+                            data-text-color="#BC73E8"
+                        >
+                            <sc-select-track
+                                track-id="10"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                >Dry</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="14"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Flanger</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="13"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Delay</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="12"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Color</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="11"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Chorus</sc-select-track
+                            >
+                        </div>
+                        <div
+                            class="hidden justify-center gap-x-12"
+                            id="key-control"
+                            data-text-color="#BC73E8"
+                        >
+                            <sc-select-track
+                                track-id="10"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                >Dry</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="14"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Flanger</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="13"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Delay</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="12"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Color</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="11"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Chorus</sc-select-track
+                            >
+                        </div>
+                        <div
+                            class="hidden justify-center gap-x-12"
+                            id="vocal-control"
+                            data-text-color="#BC73E8"
+                        >
+                            <sc-select-track
+                                track-id="10"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                >Dry</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="14"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Flanger</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="13"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Delay</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="12"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Color</sc-select-track
+                            >
+                            <sc-select-track
+                                track-id="11"
+                                with-progression-reset
+                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                >Chorus</sc-select-track
+                            >
+                        </div>
+                    </div>
+
+                    <div>
                         <sc-when-track-playing
                             track-id="[0, 5]"
                             no-initial-hide
                         >
-                            DRY
+                            <img
+                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
+                                class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                alt=""
+                            />
                         </sc-when-track-playing>
                         <sc-when-track-playing track-id="[1, 6]">
-                            CHORUS
+                            <img
+                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
+                                class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                alt=""
+                            />
                         </sc-when-track-playing>
                         <sc-when-track-playing track-id="[2, 7]">
-                            COLOR
+                            <img
+                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
+                                class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                alt=""
+                            />
                         </sc-when-track-playing>
                         <sc-when-track-playing track-id="[3, 8]">
-                            DELAY
+                            <img
+                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
+                                class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                alt=""
+                            />
                         </sc-when-track-playing>
                         <sc-when-track-playing track-id="[4, 9]">
-                            FLANGER
+                            <img
+                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
+                                class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                alt=""
+                            />
                         </sc-when-track-playing>
                     </div>
+
+                    <div class="flex justify-center gap-x-12 text-4xl">
+                        <button
+                            type="button"
+                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white bg-white/50"
+                            id="guitare"
+                        >
+                            Guitare
+                        </button>
+                        <button
+                            type="button"
+                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                            id="drum"
+                        >
+                            Drum
+                        </button>
+                        <button
+                            type="button"
+                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                            id="bass"
+                        >
+                            Bass
+                        </button>
+                        <button
+                            type="button"
+                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                            id="key"
+                        >
+                            Key
+                        </button>
+                        <button
+                            type="button"
+                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                            id="vocal"
+                        >
+                            Vocal
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center pl-12">
                     <sc-when-track-playing>
-                        <sc-stop>Pause</sc-stop>
+                        <sc-stop>
+                            <img
+                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/pause.png"
+                                class="max-w-[70px]"
+                                alt=""
+                            />
+                        </sc-stop>
                     </sc-when-track-playing>
                     <sc-when-track-playing inverted no-initial-hide>
-                        <sc-play>Play</sc-play>
+                        <sc-play>
+                            <img
+                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/play.png"
+                                class="max-w-[70px]"
+                                alt=""
+                            />
+                        </sc-play>
                     </sc-when-track-playing>
-                </div>
-                <div
-                    id="guitare-control"
-                    style="
-                        width: 25%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-around;
-                        align-content: space-around;
-                    "
-                >
-                    <sc-select-track track-id="0">
-                        <button type="button" style="width: 100%">DRY</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="1">
-                        <button type="button" style="width: 100%">
-                            CHORUS
-                        </button>
-                    </sc-select-track>
-                    <sc-select-track track-id="2">
-                        <button type="button" style="width: 100%">COLOR</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="3">
-                        <button type="button" style="width: 100%">DELAY</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="4">
-                        <button type="button" style="width: 100%">
-                            FLANGER
-                        </button>
-                    </sc-select-track>
-                </div>
-                <div
-                    id="drum-control"
-                    style="
-                        width: 25%;
-                        display: none;
-                        flex-direction: column;
-                        justify-content: space-around;
-                        align-content: space-around;
-                    "
-                >
-                    <sc-select-track track-id="5">
-                        <button type="button" style="width: 100%">DRY</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="6">
-                        <button type="button" style="width: 100%">
-                            CHORUS
-                        </button>
-                    </sc-select-track>
-                    <sc-select-track track-id="7">
-                        <button type="button" style="width: 100%">COLOR</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="8">
-                        <button type="button" style="width: 100%">DELAY</button>
-                    </sc-select-track>
-                    <sc-select-track track-id="9">
-                        <button type="button" style="width: 100%">
-                            FLANGER
-                        </button>
-                    </sc-select-track>
                 </div>
             </soundcloud-player>
         </div>
-
-        <script>
-            /**
-             *
-             * @type {SCPlayer}
-             */
-            const player = document.querySelector('soundcloud-player');
-
-            const drum = document.getElementById('drum');
-            const guitare = document.getElementById('guitare');
-
-            [drum, guitare].forEach((el) =>
-                el.addEventListener('click', ({ target }) => {
-                    hideOthers(target);
-                }),
-            );
-
-            function hideOthers(el) {
-                [drum, guitare]
-                    .filter((other) => other.id !== el.id)
-                    .forEach((other) => {
-                        const controlId = other.id + '-control';
-                        const control = document.getElementById(controlId);
-                        control.style.display = 'none';
-                    });
-                document.getElementById(el.id + '-control').style.display =
-                    'flex';
-                playPreviousEffectWithNewSound(el.id);
-            }
-
-            function playPreviousEffectWithNewSound(kind) {
-                const currentIndex = player.getCurrentTrackIndex() % 5;
-                const toPlay = getControls(kind + '-control')[currentIndex];
-                const trackId = toPlay.getAttribute('track-id');
-                player.soundcloudInstance.skipTo(trackId);
-            }
-
-            function getControls(kind) {
-                return document.querySelectorAll(`#${kind} sc-select-track`);
-            }
-        </script>
+        <script type="module" src="/src/main.ts"></script>
     </body>
 </html>

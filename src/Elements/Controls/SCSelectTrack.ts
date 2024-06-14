@@ -1,27 +1,35 @@
-import { SCPlayer } from '../SCPlayer.ts';
+import { type SCPlayer } from '../SCPlayer.ts';
 import { EventManager } from '../../Classes/EventManager.ts';
+import { type TSCTrackSkipDetails } from '../../Classes/SCServiceEvents.ts';
 
-type TSelectTrackOptions = {
-    trackId?: number;
-};
+interface TSelectTrackOptions {
+    trackId: number;
+    withProgressionReset: boolean;
+}
 
 export class SCSelectTrack extends HTMLElement {
     private player: SCPlayer | null = null;
-    private options: TSelectTrackOptions;
+    private options!: TSelectTrackOptions;
 
     constructor() {
         super();
-        this.options = {};
     }
 
     initOptions(): void {
-        const options: TSelectTrackOptions = {};
-
         const trackId = this.getAttribute('track-id');
+        const withProgressionReset = this.getAttribute(
+            'with-progression-reset',
+        );
 
-        options.trackId = trackId ? parseInt(trackId) : undefined;
+        if (trackId === null) {
+            console.warn('Cant init event without track-id', this);
+            return;
+        }
 
-        this.options = options;
+        this.options = {
+            trackId: parseInt(trackId),
+            withProgressionReset: withProgressionReset !== null,
+        };
     }
 
     attachPlayer(player: SCPlayer) {
@@ -38,9 +46,12 @@ export class SCSelectTrack extends HTMLElement {
         const scInstance = this.player.soundcloudInstance;
 
         this.addEventListener('click', () => {
-            EventManager.sendEvent(
+            EventManager.sendEvent<TSCTrackSkipDetails>(
                 scInstance.getEvent('track.skip'),
-                this.options.trackId,
+                {
+                    index: this.options.trackId,
+                    resetTime: this.options.withProgressionReset,
+                },
             );
         });
     }

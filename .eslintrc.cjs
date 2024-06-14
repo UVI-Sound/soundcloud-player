@@ -22,5 +22,11 @@ module.exports = {
     rules: {
         '@typescript-eslint/no-extraneous-class': 'off',
         '@typescript-eslint/strict-boolean-expressions': 'off',
+        '@typescript-eslint/indent': 'off',
+        '@typescript-eslint/semi': 'off',
+        '@typescript-eslint/comma-dangle': 'off',
+        '@typescript-eslint/space-before-function-paren': 'off',
+        '@typescript-eslint/member-delimiter-style': 'off',
+        indent: 'off',
     },
 };
