@@ -65,6 +65,7 @@ export class SCTrackIsPlaying extends HTMLElement {
         EventService.listenEvent(
             this.player.soundcloudInstance.getEvent(events.start),
             () => {
+                console.log(events.start);
                 const display = !this.options.not;
                 this.style.display = display ? 'block' : 'none';
             },

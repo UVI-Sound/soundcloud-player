@@ -121,9 +121,10 @@ export class SCService {
             },
         );
 
-        this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY, () =>
-            EventService.sendEvent(this.getEvent('track.started')),
-        );
+        this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY, () => {
+            console.log('play');
+            EventService.sendEvent(this.getEvent('track.started'));
+        });
         this.soundcloud.bind(scWindow.SC.Widget.Events.PAUSE, () =>
             EventService.sendEvent(this.getEvent('track.stopped')),
         );
