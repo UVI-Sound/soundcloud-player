@@ -54,6 +54,6 @@ export class SCWhenTrackSelected extends HTMLElement {
     }
 }
 
-if (customElements.get('sc-when-track-selected') !== null) {
-    customElements.define('sc-when-track-selected', SCWhenTrackSelected);
+if (customElements.get('sc-track-selected') !== null) {
+    customElements.define('sc-track-selected', SCWhenTrackSelected);
 }

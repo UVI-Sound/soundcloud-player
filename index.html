@@ -349,23 +349,23 @@
                         </div>
                     </div>
                     <div>
-                        <sc-when-track-selected track-id="[4, 9]">
-                            <sc-when-track-playing initial-hide>
+                        <sc-track-selected track-id="[4, 9]">
+                            <sc-track-playing initial-hide>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
                                     id="dry-image"
                                     alt=""
                                 />
-                            </sc-when-track-playing>
-                            <sc-when-track-playing not>
+                            </sc-track-playing>
+                            <sc-track-playing not>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.png"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
                                     alt="dry-image"
                                 />
-                            </sc-when-track-playing>
-                        </sc-when-track-selected>
+                            </sc-track-playing>
+                        </sc-track-selected>
                     </div>
 
                     <div class="flex justify-center gap-x-12 text-4xl">
@@ -408,7 +408,7 @@
                 </div>
 
                 <div class="flex items-center pl-12">
-                    <sc-when-track-playing initial-hide>
+                    <sc-track-playing initial-hide>
                         <sc-stop>
                             <img
                                 src="https://www.uvi.net/img/cms/Tape-Suite/Player/pause.png"
@@ -416,8 +416,8 @@
                                 alt=""
                             />
                         </sc-stop>
-                    </sc-when-track-playing>
-                    <sc-when-track-playing not>
+                    </sc-track-playing>
+                    <sc-track-playing not>
                         <sc-play>
                             <img
                                 src="https://www.uvi.net/img/cms/Tape-Suite/Player/play.png"
@@ -425,7 +425,7 @@
                                 alt=""
                             />
                         </sc-play>
-                    </sc-when-track-playing>
+                    </sc-track-playing>
                 </div>
             </soundcloud-player>
         </div>

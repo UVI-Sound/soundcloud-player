@@ -122,11 +122,9 @@ export class SCService {
         );
 
         EventService.listenEvent(this.getEvent('track.start'), () => {
-            console.log('play');
             this.soundcloud.play();
         });
         EventService.listenEvent(this.getEvent('track.stop'), () => {
-            console.log('pause');
             this.soundcloud.pause();
         });
 
@@ -140,6 +138,7 @@ export class SCService {
                 );
             },
         );
+
         EventService.listenEvent<TSCTrackSkipDetails>(
             this.getEvent('track.change'),
             (detail) => {

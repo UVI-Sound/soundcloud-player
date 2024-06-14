@@ -66,6 +66,6 @@ export class SCWhenTrackPlaying extends HTMLElement {
     }
 }
 
-if (customElements.get('sc-when-track-playing') !== null) {
-    customElements.define('sc-when-track-playing', SCWhenTrackPlaying);
+if (customElements.get('sc-track-playing') !== null) {
+    customElements.define('sc-track-playing', SCWhenTrackPlaying);
 }

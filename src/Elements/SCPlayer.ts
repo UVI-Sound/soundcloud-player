@@ -35,10 +35,8 @@ export class SCPlayer extends HTMLElement {
         this.playButton = this.querySelector('sc-play');
         this.stopButton = this.querySelector('sc-stop');
         this.selectTracks = this.querySelectorAll('sc-select-track');
-        this.whenTrackPlaying = this.querySelectorAll('sc-when-track-playing');
-        this.whenTrackSelected = this.querySelectorAll(
-            'sc-when-track-selected',
-        );
+        this.whenTrackPlaying = this.querySelectorAll('sc-track-playing');
+        this.whenTrackSelected = this.querySelectorAll('sc-track-selected');
 
         this.bindEvents();
     }
