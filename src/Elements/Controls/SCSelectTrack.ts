@@ -1,5 +1,5 @@
 import { type SCPlayer } from '../SCPlayer.ts';
-import { EventManager } from '../../Classes/EventManager.ts';
+import { EventService } from '../../Classes/EventService.ts';
 import { type TSCTrackSkipDetails } from '../../Classes/SCServiceEvents.ts';
 
 interface TSelectTrackOptions {
@@ -11,8 +11,9 @@ export class SCSelectTrack extends HTMLElement {
     private player: SCPlayer | null = null;
     private options!: TSelectTrackOptions;
 
-    constructor() {
-        super();
+    init(player: SCPlayer): this {
+        this.attachPlayer(player);
+        return this.bindEvents();
     }
 
     initOptions(): void {
@@ -32,21 +33,21 @@ export class SCSelectTrack extends HTMLElement {
         };
     }
 
-    attachPlayer(player: SCPlayer) {
+    attachPlayer(player: SCPlayer): this {
         this.player = player;
         return this;
     }
 
-    bindEvents() {
+    bindEvents(): this {
         this.initOptions();
         if (!this.player) {
             console.warn('Cant init event without player attached');
-            return;
+            return this;
         }
         const scInstance = this.player.soundcloudInstance;
 
         this.addEventListener('click', () => {
-            EventManager.sendEvent<TSCTrackSkipDetails>(
+            EventService.sendEvent<TSCTrackSkipDetails>(
                 scInstance.getEvent('track.skip'),
                 {
                     index: this.options.trackId,
@@ -54,6 +55,7 @@ export class SCSelectTrack extends HTMLElement {
                 },
             );
         });
+        return this;
     }
 }
 

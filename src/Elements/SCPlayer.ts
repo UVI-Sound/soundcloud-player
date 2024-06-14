@@ -1,6 +1,6 @@
 import { SCService } from '../Classes/SCService.ts';
 import { uuid } from '../utils/uuid.ts';
-import { EventManager } from '../Classes/EventManager.ts';
+import { EventService } from '../Classes/EventService.ts';
 import { type SCPlay } from './Controls/SCPlay.ts';
 import { type SCStop } from './Controls/SCStop.ts';
 import { type SCSelectTrack } from './Controls/SCSelectTrack.ts';
@@ -43,7 +43,7 @@ export class SCPlayer extends HTMLElement {
      * @private
      */
     private bindEvents(): void {
-        EventManager.listenEvent<TSCPlaylistTracksChangedDetails>(
+        EventService.listenEvent<TSCPlaylistTracksChangedDetails>(
             this.soundcloudInstance.getEvent('playlist.tracks.changed'),
             (detail) => {
                 this.playlistTrackIds = detail.tracks.map((track): number =>
@@ -52,14 +52,10 @@ export class SCPlayer extends HTMLElement {
             },
         );
 
-        this.playButton?.attachPlayer(this).bindEvents();
-        this.stopButton?.attachPlayer(this).bindEvents();
-        this.selectTracks?.forEach((el: SCSelectTrack) => {
-            el.attachPlayer(this).bindEvents();
-        });
-        this.whenTrackPlaying?.forEach((el: SCWhenTrackPlaying) => {
-            el.attachPlayer(this).bindEvents();
-        });
+        this.playButton?.init(this);
+        this.stopButton?.init(this);
+        this.selectTracks?.forEach((el) => el.init(this));
+        this.whenTrackPlaying?.forEach((el) => el.init(this));
     }
 
     private initSoundcloud(): boolean {

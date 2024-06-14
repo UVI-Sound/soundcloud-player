@@ -1,5 +1,5 @@
 import { type SCPlayer } from '../SCPlayer.ts';
-import { EventManager } from '../../Classes/EventManager.ts';
+import { EventService } from '../../Classes/EventService.ts';
 
 interface TSCWhenTrackPlayingOptions {
     // Index of the track in the playlist
@@ -22,11 +22,16 @@ export class SCWhenTrackPlaying extends HTMLElement {
         };
     }
 
-    connectedCallback() {
+    connectedCallback(): void {
         this.style.display = 'none';
     }
 
-    initOptions(): void {
+    init(player: SCPlayer): this {
+        this.attachPlayer(player);
+        return this.bindEvents();
+    }
+
+    initOptions(): this {
         const options: TSCWhenTrackPlayingOptions = {};
 
         const trackId = this.getAttribute('track-id');
@@ -45,25 +50,26 @@ export class SCWhenTrackPlaying extends HTMLElement {
         }
 
         this.options = options;
+        return this;
     }
 
-    attachPlayer(player: SCPlayer) {
+    attachPlayer(player: SCPlayer): this {
         this.player = player;
         return this;
     }
 
-    bindEvents() {
+    bindEvents(): this {
         this.initOptions();
 
         this.style.display = this.options.initialHide ? 'none' : 'block';
 
         if (!this.player) {
             console.warn('Cant init event without player attached');
-            return;
+            return this;
         }
 
         if (this.options.trackIds === undefined) {
-            EventManager.listenEvent(
+            EventService.listenEvent(
                 this.player.soundcloudInstance.getEvent('track.start-playing'),
                 () => {
                     const display = !this.options.inverted;
@@ -71,7 +77,7 @@ export class SCWhenTrackPlaying extends HTMLElement {
                 },
             );
 
-            EventManager.listenEvent(
+            EventService.listenEvent(
                 this.player.soundcloudInstance.getEvent('track.stop-playing'),
                 () => {
                     const display = this.options.inverted;
@@ -79,29 +85,31 @@ export class SCWhenTrackPlaying extends HTMLElement {
                 },
             );
 
-            return;
+            return this;
         }
 
-        EventManager.listenEvent(
+        EventService.listenEvent(
             this.player.soundcloudInstance.getEvent('track.start-playing'),
             () => {
                 this.withTrackIdCallback();
             },
         );
 
-        EventManager.listenEvent(
+        EventService.listenEvent(
             this.player.soundcloudInstance.getEvent('track.stop-playing'),
             () => {
                 this.withTrackIdCallback();
             },
         );
+
+        return this;
     }
 
-    withTrackIdCallback() {
+    withTrackIdCallback(): void {
         const sameTrack = this.options.trackIds?.includes(
             this.player?.getCurrentTrackIndex() ?? -1,
         );
-        let display = this.options.inverted ? !sameTrack : sameTrack;
+        const display = this.options.inverted ? !sameTrack : sameTrack;
         this.style.display = display ? 'block' : 'none';
     }
 }

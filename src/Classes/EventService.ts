@@ -1,7 +1,7 @@
-export class EventManager {
-    public static sendEvent<EventDetailsType>(
+export class EventService {
+    public static sendEvent<TEventDetails>(
         type: string,
-        details?: EventDetailsType,
+        details?: TEventDetails,
     ): boolean {
         return dispatchEvent(new CustomEvent(type, { detail: details ?? {} }));
     }
@@ -13,14 +13,14 @@ export class EventManager {
      * @param callback
      * @returns
      */
-    public static listenEvent<EventDetailsType>(
+    public static listenEvent<TEventDetails>(
         types: string | string[],
-        callback: (detail: EventDetailsType, event: Event) => void,
+        callback: (detail: TEventDetails, event: Event) => void,
     ): void {
         types = Array.isArray(types) ? types : [types];
         types.forEach((type: string) => {
             window.addEventListener(type, function (e: Event) {
-                const event = e as Event & { detail: EventDetailsType };
+                const event = e as Event & { detail: TEventDetails };
                 callback(event.detail, e);
             });
         });

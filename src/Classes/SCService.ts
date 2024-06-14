@@ -1,5 +1,5 @@
 import { loadScript } from '../utils/loadScript.ts';
-import { EventManager } from './EventManager.ts';
+import { EventService } from './EventService.ts';
 import { hideIframe } from '../utils/hiddeIframe.ts';
 import {
     type TSCPlaylistTracksChangedDetails,
@@ -16,7 +16,7 @@ export interface TSCTrack {
     id?: number;
 }
 
-export interface SoundcloudType {
+export interface TSCWidget {
     bind: <T>(type: string, callback: (data: T) => void) => void;
     getSounds: (callback: (sounds: TSCTrack[]) => void) => void;
     play: () => void;
@@ -26,7 +26,7 @@ export interface SoundcloudType {
     getCurrentSound: (callback: (currentSound: TSCTrack) => void) => void;
 }
 
-export type ScEventTypes =
+export type TSCEvents =
     | 'track.play'
     | 'track.start-playing'
     | 'track.stop-playing'
@@ -40,7 +40,7 @@ export type ScEventTypes =
 
 const scWindow = window as unknown as {
     SC: {
-        Widget: ((iframe: HTMLIFrameElement) => SoundcloudType) & {
+        Widget: ((iframe: HTMLIFrameElement) => TSCWidget) & {
             Events: {
                 PLAY: string;
                 PLAY_PROGRESS: string;
@@ -51,7 +51,7 @@ const scWindow = window as unknown as {
 };
 
 export class SCService {
-    soundcloud!: SoundcloudType;
+    soundcloud!: TSCWidget;
     currentTrack: TSCTrack;
 
     constructor(
@@ -81,7 +81,7 @@ export class SCService {
         loadScript('https://w.soundcloud.com/player/api.js', () => {
             this.soundcloud = scWindow.SC.Widget(this.iframe);
             this.soundcloud.bind('ready', () => {
-                EventManager.sendEvent(this.getEvent('sc.ready'));
+                EventService.sendEvent(this.getEvent('sc.ready'));
                 this.soundcloud.getSounds((sounds: TSCTrack[]) => {
                     this.changePlaylistTrackIds(sounds);
                     this.trackChanged(sounds[0]);
@@ -97,14 +97,14 @@ export class SCService {
                             100
                         ).toFixed(2),
                     );
-                    EventManager.sendEvent(this.getEvent('track.progressed'));
+                    EventService.sendEvent(this.getEvent('track.progressed'));
                 },
             );
             this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY, () =>
-                EventManager.sendEvent(this.getEvent('track.start-playing')),
+                EventService.sendEvent(this.getEvent('track.start-playing')),
             );
             this.soundcloud.bind(scWindow.SC.Widget.Events.PAUSE, () =>
-                EventManager.sendEvent(this.getEvent('track.stop-playing')),
+                EventService.sendEvent(this.getEvent('track.stop-playing')),
             );
         });
     }
@@ -116,34 +116,34 @@ export class SCService {
      */
     private trackChanged(track: TSCTrack): void {
         this.currentTrack = track;
-        EventManager.sendEvent<TSCTrackChangedDetails>(
+        EventService.sendEvent<TSCTrackChangedDetails>(
             this.getEvent('track.changed'),
             { track },
         );
     }
 
     private changePlaylistTrackIds(tracks: TSCTrack[]): void {
-        EventManager.sendEvent<TSCPlaylistTracksChangedDetails>(
+        EventService.sendEvent<TSCPlaylistTracksChangedDetails>(
             this.getEvent('playlist.tracks.changed'),
             { tracks },
         );
     }
 
     private bindEvents(): void {
-        EventManager.listenEvent(this.getEvent('track.play'), () => {
+        EventService.listenEvent(this.getEvent('track.play'), () => {
             this.soundcloud.play();
         });
-        EventManager.listenEvent(this.getEvent('track.pause'), () => {
+        EventService.listenEvent(this.getEvent('track.pause'), () => {
             this.soundcloud.pause();
         });
 
-        EventManager.listenEvent<TSCTrackTime>(
+        EventService.listenEvent<TSCTrackTime>(
             this.getEvent('track.time'),
             (detail) => {
                 this.soundcloud.seekTo(detail.ms);
             },
         );
-        EventManager.listenEvent<TSCTrackSkipDetails>(
+        EventService.listenEvent<TSCTrackSkipDetails>(
             this.getEvent('track.skip'),
             (detail) => {
                 this.skipTo(detail.index, detail.resetTime);
@@ -164,7 +164,7 @@ export class SCService {
         this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
     }
 
-    getEvent(type: ScEventTypes): string {
+    getEvent(type: TSCEvents): string {
         return this.elementUuid + type;
     }
 }
