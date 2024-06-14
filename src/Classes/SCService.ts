@@ -4,10 +4,10 @@ import { hideIframe } from '../utils/hiddeIframe.ts';
 import {
     type TSCEvents,
     type TSCPlaylistTracksChangedDetails,
-    type TSCTrackChangedDetails,
-    type TSCTrackSkipDetails,
+    type TSCTrackChangeDetails,
     type TSCTrackSetTime,
 } from './SCServiceEvents.ts';
+import { getTrackIndexInPlaylist } from '../helpers.ts';
 
 export interface TSCTrack {
     title: string;
@@ -42,6 +42,7 @@ const scWindow = window as unknown as {
 export class SCService {
     soundcloud!: TSCWidget;
     currentTrack: TSCTrack;
+    currentPlaylist!: TSCTrack[];
 
     constructor(
         private readonly iframe: HTMLIFrameElement,
@@ -79,9 +80,14 @@ export class SCService {
      */
     private trackChanged(track: TSCTrack): void {
         this.currentTrack = track;
-        EventService.sendEvent<TSCTrackChangedDetails>(
+        EventService.sendEvent<TSCTrackChangeDetails>(
             this.getEvent('track.changed'),
-            { track },
+            {
+                currentTrackIndex: getTrackIndexInPlaylist(
+                    track,
+                    this.currentPlaylist,
+                ),
+            },
         );
     }
 
@@ -96,6 +102,7 @@ export class SCService {
         this.soundcloud.bind('ready', () => {
             EventService.sendEvent(this.getEvent('sc.ready'));
             this.soundcloud.getSounds((sounds: TSCTrack[]) => {
+                this.currentPlaylist = sounds;
                 this.changePlaylistTrackIds(sounds);
                 this.trackChanged(sounds[0]);
             });
@@ -139,10 +146,10 @@ export class SCService {
             },
         );
 
-        EventService.listenEvent<TSCTrackSkipDetails>(
+        EventService.listenEvent<TSCTrackChangeDetails>(
             this.getEvent('track.change'),
             (detail) => {
-                this.skipTo(detail.index, detail.resetTime);
+                this.skipTo(detail.currentTrackIndex, detail.withTimeReset);
             },
         );
     }

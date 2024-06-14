@@ -1,6 +1,6 @@
 import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
-import { type TSCTrackSkipDetails } from '../../Classes/SCServiceEvents.ts';
+import { type TSCTrackChangeDetails } from '../../Classes/SCServiceEvents.ts';
 
 interface TSelectTrackOptions {
     trackId: number;
@@ -47,11 +47,11 @@ export class SCSelectTrack extends HTMLElement {
         const scInstance = this.player.soundcloudInstance;
 
         this.addEventListener('click', () => {
-            EventService.sendEvent<TSCTrackSkipDetails>(
+            EventService.sendEvent<TSCTrackChangeDetails>(
                 scInstance.getEvent('track.change'),
                 {
-                    index: this.options.trackId,
-                    resetTime: this.options.withProgressionReset,
+                    currentTrackIndex: this.options.trackId,
+                    withTimeReset: this.options.withProgressionReset,
                 },
             );
         });
