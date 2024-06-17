@@ -62,22 +62,15 @@ export class SCTrackIsPlaying extends HTMLElement {
             stop: 'track.stop' | 'track.stopped';
         };
 
-        EventService.listenEvent(
-            this.player.soundcloudInstance.getEvent(events.start),
-            () => {
-                console.log(events.start);
-                const display = !this.options.not;
-                this.style.display = display ? 'block' : 'none';
-            },
-        );
+        EventService.listenEvent(this.player.sc.getEvent(events.start), () => {
+            const display = !this.options.not;
+            this.style.display = display ? 'block' : 'none';
+        });
 
-        EventService.listenEvent(
-            this.player.soundcloudInstance.getEvent(events.stop),
-            () => {
-                const display = this.options.not;
-                this.style.display = display ? 'block' : 'none';
-            },
-        );
+        EventService.listenEvent(this.player.sc.getEvent(events.stop), () => {
+            const display = this.options.not;
+            this.style.display = display ? 'block' : 'none';
+        });
 
         return this;
     }

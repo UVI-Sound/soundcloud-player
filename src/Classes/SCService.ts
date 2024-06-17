@@ -47,7 +47,10 @@ export class SCService {
     constructor(
         private readonly iframe: HTMLIFrameElement,
         private readonly elementUuid: string,
-        private readonly options: { trackId: string; secret: string | null },
+        private readonly options: {
+            playlistId: string;
+            playlistSecret: string | null;
+        },
     ) {
         this.currentTrack = {
             title: '',
@@ -57,13 +60,18 @@ export class SCService {
         };
     }
 
+    /**
+     * Initializes the SoundCloud player by setting up the required properties and loading the necessary scripts.
+     *
+     * @returns {void}
+     */
     init(): void {
         this.iframe.allow = 'autoplay';
         this.iframe.src =
             'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
-            this.options.trackId +
-            (this.options.secret
-                ? '%3Fsecret_token%3' + this.options.secret
+            this.options.playlistId +
+            (this.options.playlistSecret
+                ? '%3Fsecret_token%3' + this.options.playlistSecret
                 : '');
 
         hideIframe(this.iframe);
@@ -74,9 +82,12 @@ export class SCService {
     }
 
     /**
-     * Track changed
-     * @param track
+     * Updates the current track and triggers an event to notify track change.
+     *
+     * @param {TSCTrack} track - The new track to set as the current track.
+     *
      * @private
+     * @returns {void}
      */
     private trackChanged(track: TSCTrack): void {
         this.currentTrack = track;
@@ -91,6 +102,14 @@ export class SCService {
         );
     }
 
+    /**
+     * Changes the track IDs of a playlist.
+     *
+     * @param {TSCTrack[]} tracks - The array of tracks with the new track IDs.
+     *
+     * @private
+     * @return {void}
+     */
     private changePlaylistTrackIds(tracks: TSCTrack[]): void {
         EventService.sendEvent<TSCPlaylistTracksChangedDetails>(
             this.getEvent('playlist.tracks.changed'),
@@ -98,6 +117,11 @@ export class SCService {
         );
     }
 
+    /**
+     * Binds events to the SoundCloud player.
+     *
+     * @private
+     */
     private bindEvents(): void {
         this.soundcloud.bind('ready', () => {
             EventService.sendEvent(this.getEvent('sc.ready'));
@@ -122,7 +146,6 @@ export class SCService {
         );
 
         this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY, () => {
-            console.log('play');
             EventService.sendEvent(this.getEvent('track.started'));
         });
         this.soundcloud.bind(scWindow.SC.Widget.Events.PAUSE, () =>
@@ -156,9 +179,12 @@ export class SCService {
     }
 
     /**
+     * Skips to the specified index in the track list.
      *
-     * @param index - track index in playlist
-     * @param resetTime - if true, time will be set to 0
+     * @param {number} index - The index of the track to skip to.
+     * @param {boolean} [resetTime=false] - Specifies whether to reset the playback time to 0 when skipping.
+     *
+     * @returns {void}
      */
     skipTo(index: number, resetTime: boolean = false): void {
         if (resetTime) {
@@ -171,6 +197,12 @@ export class SCService {
         this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
     }
 
+    /**
+     * Retrieves the event associated with the given type.
+     *
+     * @param {TSCEvents} type - The type of event.
+     * @returns {string} - The event associated with the given type.
+     */
     getEvent(type: TSCEvents): string {
         return this.elementUuid + type;
     }

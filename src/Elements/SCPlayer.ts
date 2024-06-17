@@ -10,19 +10,23 @@ import { type SCTrackIsSelected } from './Controls/SCTrackIsSelected.ts';
 import { getTrackIndexInPlaylist } from '../helpers.ts';
 
 export class SCPlayer extends HTMLElement {
-    playButton!: SCPlay | null;
-    stopButton!: SCStop | null;
+    // Elements
+    play!: SCPlay | null;
+    stop!: SCStop | null;
     selectTracks!: NodeListOf<SCSelectTrack>;
-    whenTrackPlaying!: NodeListOf<SCTrackIsPlaying>;
-    whenTrackSelected!: NodeListOf<SCTrackIsSelected>;
-    soundcloudInstance!: SCService;
-    iframePlayer!: HTMLIFrameElement;
+    trackIsPlaying!: NodeListOf<SCTrackIsPlaying>;
+    trackIsSelected!: NodeListOf<SCTrackIsSelected>;
 
-    uuid: string | undefined;
-    playlistId!: string | null;
-    playlistSecret!: string | null;
-    playlistTrackIds: number[] = [];
-    playlistTracks: TSCTrack[] = [];
+    // Attached soundcloud instance
+    sc!: SCService;
+
+    // Current playlist tracks
+    tracks: TSCTrack[] = [];
+
+    private playlistId!: string | null;
+    private playlistSecret!: string | null;
+    private iframePlayer!: HTMLIFrameElement;
+    private uuid: string | undefined;
 
     connectedCallback(): void {
         this.uuid = uuid();
@@ -34,36 +38,43 @@ export class SCPlayer extends HTMLElement {
             return;
         }
 
-        this.playButton = this.querySelector('sc-play');
-        this.stopButton = this.querySelector('sc-stop');
+        this.play = this.querySelector('sc-play');
+        this.stop = this.querySelector('sc-stop');
         this.selectTracks = this.querySelectorAll('sc-select-track');
-        this.whenTrackPlaying = this.querySelectorAll('sc-track-is-playing');
-        this.whenTrackSelected = this.querySelectorAll('sc-track-is-selected');
+        this.trackIsPlaying = this.querySelectorAll('sc-track-is-playing');
+        this.trackIsSelected = this.querySelectorAll('sc-track-is-selected');
 
         this.bindEvents();
     }
 
     /**
+     * Binds event listeners and initializes play, stop, selectTracks, trackIsPlaying, and trackIsSelected elements.
      *
      * @private
+     * @return {void}
      */
     private bindEvents(): void {
         EventService.listenEvent<TSCPlaylistTracksChangedDetails>(
-            this.soundcloudInstance.getEvent('playlist.tracks.changed'),
-            (detail) => {
-                this.playlistTrackIds = detail.tracks.map((track): number =>
-                    track.id ? track.id : -1,
-                );
-            },
+            this.sc.getEvent('playlist.tracks.changed'),
+            ({ tracks }) => (this.tracks = tracks),
         );
 
-        this.playButton?.init(this);
-        this.stopButton?.init(this);
-        this.selectTracks?.forEach((el) => el.init(this));
-        this.whenTrackPlaying?.forEach((el) => el.init(this));
-        this.whenTrackSelected?.forEach((el) => el.init(this));
+        this.play?.init(this);
+        this.stop?.init(this);
+
+        [
+            ...this.selectTracks,
+            ...this.trackIsPlaying,
+            ...this.trackIsSelected,
+        ].forEach((elem) => elem.init(this));
     }
 
+    /**
+     * Initializes the Soundcloud playlist.
+     *
+     * @private
+     * @returns {boolean} - Returns true if initialization is successful, false otherwise.
+     */
     private initSoundcloud(): boolean {
         if (!(this.uuid && this.playlistId)) {
             return false;
@@ -72,19 +83,21 @@ export class SCPlayer extends HTMLElement {
         this.iframePlayer = document.createElement('iframe');
         document.body.appendChild(this.iframePlayer);
 
-        this.soundcloudInstance = new SCService(this.iframePlayer, this.uuid, {
-            trackId: this.playlistId,
-            secret: this.playlistSecret,
+        this.sc = new SCService(this.iframePlayer, this.uuid, {
+            playlistId: this.playlistId,
+            playlistSecret: this.playlistSecret,
         });
-        this.soundcloudInstance.init();
+        this.sc.init();
         return true;
     }
 
+    /**
+     * Returns the index of the current track in the playlist.
+     *
+     * @returns {number} The index of the current track.
+     */
     getCurrentTrackIndex(): number {
-        return getTrackIndexInPlaylist(
-            this.soundcloudInstance.currentTrack,
-            this.playlistTracks,
-        );
+        return getTrackIndexInPlaylist(this.sc.currentTrack, this.tracks);
     }
 }
 

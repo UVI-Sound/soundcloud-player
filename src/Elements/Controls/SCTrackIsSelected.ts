@@ -42,7 +42,7 @@ export class SCTrackIsSelected extends HTMLElement {
         const event = this.options.before ? 'track.change' : 'track.changed';
 
         EventService.listenEvent<TSCTrackChangeDetails>(
-            this.player.soundcloudInstance.getEvent(event),
+            this.player.sc.getEvent(event),
             (detail) => {
                 if (
                     !this.options.trackIds?.includes(detail.currentTrackIndex)

@@ -1,3 +1,10 @@
+/**
+ * Loads a script from the specified URL and executes a callback function.
+ *
+ * @param {string} url - The URL of the script to load.
+ * @param {Function} callback - The callback function to execute after the script is loaded.
+ * @returns {void}
+ */
 export const loadScript = (url: string, callback: () => void): void => {
     const scripts = [].slice
         .call(document.getElementsByTagName('script'))

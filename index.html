@@ -474,9 +474,8 @@
         function playPreviousEffectWithNewSound(kind) {
             const currentIndex = player.getCurrentTrackIndex() % 5;
             const toPlay = getControls(kind)[currentIndex];
-            console.log(toPlay);
             const trackId = toPlay.getAttribute('track-id');
-            player.soundcloudInstance.skipTo(trackId);
+            player.sc.skipTo(trackId);
         }
 
         function getControls(kind) {

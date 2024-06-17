@@ -19,7 +19,7 @@ export class SCPlay extends HTMLElement {
             console.warn('Cant init event without player attached');
             return this;
         }
-        const scInstance = this.player.soundcloudInstance;
+        const scInstance = this.player.sc;
 
         this.addEventListener('click', () => {
             EventService.sendEvent(scInstance.getEvent('track.start'));
