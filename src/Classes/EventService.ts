@@ -1,4 +1,13 @@
+/**
+ * EventService is a utility class for sending and listening to events.
+ */
 export class EventService {
+    /**
+     * Sends an event with the specified type and optional details.
+     *
+     * @param {string} type - The type of the event.
+     * @param {TEventDetails} [details] - Optional details associated with the event.
+     * @returns {boolean} - Returns a boolean indicating whether the event was successfully */
     public static sendEvent<TEventDetails>(
         type: string,
         details?: TEventDetails,
@@ -7,11 +16,13 @@ export class EventService {
     }
 
     /**
-     * Listen to one are more event and apply callback to
+     * Listens for specified event types and executes the provided callback function when the event occurs.
      *
-     * @param types
-     * @param callback
-     * @returns
+     * @param {string|string[]} types - The type or types of events to listen for.
+     * @param {function} callback - The function to be called when the event occurs. It accepts two parameters: the event details and the event object.
+     * @template TEventDetails - The type of the event details.
+     *
+     * @return {void}
      */
     public static listenEvent<TEventDetails>(
         types: string | string[],

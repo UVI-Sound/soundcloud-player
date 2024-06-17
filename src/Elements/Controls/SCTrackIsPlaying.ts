@@ -1,5 +1,6 @@
 import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
+import { type TSCEvents } from '../../Classes/SCServiceEvents.ts';
 
 interface TSCTrackIsPlayingOptions {
     // If true, the condition will be inverted
@@ -13,6 +14,8 @@ interface TSCTrackIsPlayingOptions {
      * If true, event's are player asking soundcloud
      */
     before: boolean;
+
+    checkOnChange: boolean;
 }
 
 export class SCTrackIsPlaying extends HTMLElement {
@@ -33,10 +36,12 @@ export class SCTrackIsPlaying extends HTMLElement {
         const inverted = this.getAttribute('not');
         const initialHide = this.getAttribute('initial-hide');
         const before = this.getAttribute('before');
+        const checkOnChange = this.getAttribute('check-on-change');
         this.options = {
             not: inverted !== null,
             initialHide: initialHide !== null,
             before: before !== null,
+            checkOnChange: checkOnChange !== null,
         };
         return this;
     }
@@ -54,23 +59,35 @@ export class SCTrackIsPlaying extends HTMLElement {
             return this;
         }
 
-        const events = {
-            start: this.options.before ? 'track.start' : 'track.started',
-            stop: this.options.before ? 'track.stop' : 'track.stopped',
-        } satisfies {
-            start: 'track.start' | 'track.started';
-            stop: 'track.stop' | 'track.stopped';
-        };
+        const start: TSCEvents = this.options.before
+            ? 'track.start'
+            : 'track.started';
+        const stop: TSCEvents = this.options.before
+            ? 'track.stop'
+            : 'track.stopped';
+        const change: TSCEvents = this.options.before
+            ? 'track.change'
+            : 'track.changed';
 
-        EventService.listenEvent(this.player.sc.getEvent(events.start), () => {
-            const display = !this.options.not;
-            this.style.display = display ? 'block' : 'none';
-        });
+        const triggerEvents: TSCEvents[] = !this.options.checkOnChange
+            ? [start, stop]
+            : [start, stop, change];
 
-        EventService.listenEvent(this.player.sc.getEvent(events.stop), () => {
-            const display = this.options.not;
-            this.style.display = display ? 'block' : 'none';
+        const events = triggerEvents.map(
+            (e: TSCEvents): string => this.player?.sc.getEvent(e)!,
+        );
+
+        // EventService.listenEvent(this.player.sc.getEvent('sc.ready'), () => {
+        EventService.listenEvent(events, () => {
+            this.player?.checkIfPlayingThenExecCallback((paused) => {
+                if (this.options.not) {
+                    this.style.display = paused ? 'block' : 'none';
+                    return;
+                }
+                this.style.display = paused ? 'none' : 'block';
+            });
         });
+        // });
 
         return this;
     }

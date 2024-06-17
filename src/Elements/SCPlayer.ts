@@ -99,6 +99,10 @@ export class SCPlayer extends HTMLElement {
     getCurrentTrackIndex(): number {
         return getTrackIndexInPlaylist(this.sc.currentTrack, this.tracks);
     }
+
+    checkIfPlayingThenExecCallback(callack: (isPaused: boolean) => void): void {
+        this.sc.soundcloud.isPaused(callack);
+    }
 }
 
 if (customElements.get('soundcloud-player') !== null) {

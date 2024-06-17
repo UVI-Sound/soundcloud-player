@@ -27,6 +27,8 @@ module.exports = {
         '@typescript-eslint/comma-dangle': 'off',
         '@typescript-eslint/space-before-function-paren': 'off',
         '@typescript-eslint/member-delimiter-style': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
         indent: 'off',
     },
 };

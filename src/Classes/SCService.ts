@@ -25,6 +25,8 @@ export interface TSCWidget {
     seekTo: (ms: number) => void;
     skip: (soundIndex: number) => void;
     getCurrentSound: (callback: (currentSound: TSCTrack) => void) => void;
+
+    isPaused: (callback: (isPaused: boolean) => void) => void;
 }
 
 const scWindow = window as unknown as {

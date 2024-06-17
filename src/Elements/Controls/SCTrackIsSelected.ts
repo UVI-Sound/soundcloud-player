@@ -11,6 +11,9 @@ interface TSCTrackIsSelectedOption {
      * If true, event's are player asking soundcloud
      */
     before: boolean;
+
+    // If true, element will be initially hidden
+    initialHide: boolean;
 }
 
 export class SCTrackIsSelected extends HTMLElement {
@@ -18,16 +21,24 @@ export class SCTrackIsSelected extends HTMLElement {
     private options!: TSCTrackIsSelectedOption;
 
     init(player: SCPlayer): this {
-        return this.attachPlayer(player).initOptions().bindEvent();
+        this.attachPlayer(player).initOptions().bindEvent();
+
+        if (this.options.initialHide) {
+            this.style.display = 'none';
+        }
+
+        return this;
     }
 
     initOptions(): this {
         const trackId = this.getAttribute('track-id');
         const before = this.getAttribute('before');
+        const initialHide = this.getAttribute('initial-hide');
 
         this.options = {
             trackIds: trackId ? JSON.parse(trackId) : undefined,
             before: before !== null,
+            initialHide: initialHide !== null,
         };
 
         return this;
