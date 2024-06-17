@@ -84,6 +84,56 @@ export class SCService {
     }
 
     /**
+     * Skips to the specified index in the track list.
+     *
+     * @param {number} index - The index of the track to skip to.
+     * @param {boolean} [resetTime=false] - Specifies whether to reset the playback time to 0 when skipping.
+     *
+     * @returns {void}
+     */
+    skipTo(index: number, resetTime: boolean = false): void {
+        if (resetTime) {
+            EventService.sendEvent<TSCTrackSetTime>(
+                this.getEvent('track.set-time'),
+                { ms: 0 },
+            );
+        }
+        this.soundcloud.skip(index);
+        this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
+    }
+
+    /**
+     * Retrieves the event associated with the given type.
+     *
+     * @param {TSCEvents} type - The type of event.
+     * @returns {string} - The event associated with the given type.
+     */
+    getEvent(type: TSCEvents): string {
+        return this.elementUuid + type;
+    }
+
+    /**
+     * Returns the index of the current track in the playlist.
+     *
+     * @returns {number} The index of the current track.
+     */
+    getCurrentTrackIndex(): number {
+        return getTrackIndexInPlaylist(this.currentTrack, this.currentPlaylist);
+    }
+
+    /**
+     * Checks if the audio is currently playing or paused, and executes the specified callback function with the result.
+     *
+     * @return {void}
+     * @param callback
+     */
+    checkIfPlayingThenExecCallback(
+        callback: (isPaused: boolean) => void,
+    ): void {
+        this.soundcloud.isPaused(callback);
+    }
+
+    /**
      * Updates the current track and triggers an event to notify track change.
      *
      * @param {TSCTrack} track - The new track to set as the current track.
@@ -105,21 +155,6 @@ export class SCService {
     }
 
     /**
-     * Changes the track IDs of a playlist.
-     *
-     * @param {TSCTrack[]} tracks - The array of tracks with the new track IDs.
-     *
-     * @private
-     * @return {void}
-     */
-    private changePlaylistTrackIds(tracks: TSCTrack[]): void {
-        EventService.sendEvent<TSCPlaylistTracksChangedDetails>(
-            this.getEvent('playlist.tracks.changed'),
-            { tracks },
-        );
-    }
-
-    /**
      * Binds events to the SoundCloud player.
      *
      * @private
@@ -127,10 +162,15 @@ export class SCService {
     private bindEvents(): void {
         this.soundcloud.bind('ready', () => {
             EventService.sendEvent(this.getEvent('sc.ready'));
-            this.soundcloud.getSounds((sounds: TSCTrack[]) => {
-                this.currentPlaylist = sounds;
-                this.changePlaylistTrackIds(sounds);
-                this.trackChanged(sounds[0]);
+            this.soundcloud.getSounds((tracks: TSCTrack[]) => {
+                this.currentPlaylist = tracks;
+
+                EventService.sendEvent<TSCPlaylistTracksChangedDetails>(
+                    this.getEvent('playlist.tracks.changed'),
+                    { tracks },
+                );
+
+                this.trackChanged(tracks[0]);
             });
         });
         this.soundcloud.bind(
@@ -178,34 +218,5 @@ export class SCService {
                 this.skipTo(detail.currentTrackIndex, detail.withTimeReset);
             },
         );
-    }
-
-    /**
-     * Skips to the specified index in the track list.
-     *
-     * @param {number} index - The index of the track to skip to.
-     * @param {boolean} [resetTime=false] - Specifies whether to reset the playback time to 0 when skipping.
-     *
-     * @returns {void}
-     */
-    skipTo(index: number, resetTime: boolean = false): void {
-        if (resetTime) {
-            EventService.sendEvent<TSCTrackSetTime>(
-                this.getEvent('track.set-time'),
-                { ms: 0 },
-            );
-        }
-        this.soundcloud.skip(index);
-        this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
-    }
-
-    /**
-     * Retrieves the event associated with the given type.
-     *
-     * @param {TSCEvents} type - The type of event.
-     * @returns {string} - The event associated with the given type.
-     */
-    getEvent(type: TSCEvents): string {
-        return this.elementUuid + type;
     }
 }

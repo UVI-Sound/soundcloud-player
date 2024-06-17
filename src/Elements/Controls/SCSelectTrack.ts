@@ -1,22 +1,16 @@
-import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
 import { type TSCTrackChangeDetails } from '../../Classes/SCServiceEvents.ts';
+import SubPlayerElement from '../SubPlayerElement.ts';
 
 interface TSelectTrackOptions {
     trackId: number;
     withProgressionReset: boolean;
 }
 
-export class SCSelectTrack extends HTMLElement {
-    private player: SCPlayer | null = null;
+export class SCSelectTrack extends SubPlayerElement {
     private options!: TSelectTrackOptions;
 
-    init(player: SCPlayer): this {
-        this.attachPlayer(player);
-        return this.bindEvents();
-    }
-
-    initOptions(): void {
+    initOptions(): this {
         const trackId = this.getAttribute('track-id');
         const withProgressionReset = this.getAttribute(
             'with-progression-reset',
@@ -24,17 +18,14 @@ export class SCSelectTrack extends HTMLElement {
 
         if (trackId === null) {
             console.warn('Cant init event without track-id', this);
-            return;
+            return this;
         }
 
         this.options = {
             trackId: parseInt(trackId),
             withProgressionReset: withProgressionReset !== null,
         };
-    }
 
-    attachPlayer(player: SCPlayer): this {
-        this.player = player;
         return this;
     }
 

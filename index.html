@@ -363,6 +363,7 @@
                         <sc-track-is-selected
                             before
                             track-id="[1, 6, 11, 16, 21]"
+                            initial-hide
                         >
                             <sc-track-is-playing
                                 check-on-change
@@ -391,6 +392,7 @@
                         <sc-track-is-selected
                             before
                             track-id="[2, 7, 12, 17, 22]"
+                            initial-hide
                         >
                             <sc-track-is-playing
                                 check-on-change
@@ -418,6 +420,7 @@
                         <sc-track-is-selected
                             before
                             track-id="[3, 8, 13, 18, 23]"
+                            initial-hide
                         >
                             <sc-track-is-playing
                                 check-on-change
@@ -446,6 +449,7 @@
                         <sc-track-is-selected
                             before
                             track-id="[4, 9, 14, 19, 24]"
+                            initial-hide
                         >
                             <sc-track-is-playing
                                 check-on-change
@@ -577,7 +581,7 @@
         }
 
         function playPreviousEffectWithNewSound(kind) {
-            const currentIndex = player.getCurrentTrackIndex() % 5;
+            const currentIndex = player.sc.getCurrentTrackIndex() % 5;
             const toPlay = getControls(kind)[currentIndex];
             const trackId = toPlay.getAttribute('track-id');
             player.sc.skipTo(trackId);

@@ -1,19 +1,7 @@
-import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
+import SubPlayerElement from '../SubPlayerElement.ts';
 
-export class SCPlay extends HTMLElement {
-    private player: SCPlayer | null = null;
-
-    init(player: SCPlayer): this {
-        this.attachPlayer(player);
-        return this.bindEvents();
-    }
-
-    attachPlayer(player: SCPlayer): this {
-        this.player = player;
-        return this;
-    }
-
+export class SCPlay extends SubPlayerElement {
     bindEvents(): this {
         if (!this.player) {
             console.warn('Cant init event without player attached');

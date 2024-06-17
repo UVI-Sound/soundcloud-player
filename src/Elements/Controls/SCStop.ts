@@ -1,9 +1,7 @@
-import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
+import SubPlayerElement from '../SubPlayerElement.ts';
 
-export class SCStop extends HTMLElement {
-    private player: SCPlayer | null = null;
-
+export class SCStop extends SubPlayerElement {
     bindEvents(): this {
         if (!this.player) {
             console.warn('Cant init event without player attached');
@@ -11,15 +9,13 @@ export class SCStop extends HTMLElement {
         }
         const scInstance = this.player.sc;
 
-        this.addEventListener('click', () => {
-            EventService.sendEvent(scInstance.getEvent('track.stop'));
+        EventService.listenEvent(this.player.sc.getEvent('sc.ready'), () => {
+            this.addEventListener('click', () => {
+                EventService.sendEvent(scInstance.getEvent('track.stop'));
+            });
         });
-        return this;
-    }
 
-    init(player: SCPlayer): this {
-        this.player = player;
-        return this.bindEvents();
+        return this;
     }
 }
 

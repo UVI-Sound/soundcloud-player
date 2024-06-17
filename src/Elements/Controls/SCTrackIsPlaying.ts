@@ -1,6 +1,6 @@
-import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
 import { type TSCEvents } from '../../Classes/SCServiceEvents.ts';
+import SubPlayerElement from '../SubPlayerElement.ts';
 
 interface TSCTrackIsPlayingOptions {
     // If true, the condition will be inverted
@@ -15,22 +15,12 @@ interface TSCTrackIsPlayingOptions {
      */
     before: boolean;
 
+    // Flag indicating whether to perform a check on change or not
     checkOnChange: boolean;
 }
 
-export class SCTrackIsPlaying extends HTMLElement {
-    private player: SCPlayer | null = null;
+export class SCTrackIsPlaying extends SubPlayerElement {
     private options!: TSCTrackIsPlayingOptions;
-
-    init(player: SCPlayer): this {
-        this.attachPlayer(player).bindEvents();
-
-        if (this.options.initialHide) {
-            this.style.display = 'none';
-        }
-
-        return this;
-    }
 
     initOptions(): this {
         const inverted = this.getAttribute('not');
@@ -43,17 +33,14 @@ export class SCTrackIsPlaying extends HTMLElement {
             before: before !== null,
             checkOnChange: checkOnChange !== null,
         };
-        return this;
-    }
 
-    attachPlayer(player: SCPlayer): this {
-        this.player = player;
+        if (this.options.initialHide) {
+            this.style.display = 'none';
+        }
         return this;
     }
 
     bindEvents(): this {
-        this.initOptions();
-
         if (!this.player) {
             console.warn('Cant init event without player attached');
             return this;
@@ -71,23 +58,21 @@ export class SCTrackIsPlaying extends HTMLElement {
 
         const triggerEvents: TSCEvents[] = !this.options.checkOnChange
             ? [start, stop]
-            : [start, stop, change];
+            : [change, start, stop];
 
-        const events = triggerEvents.map(
-            (e: TSCEvents): string => this.player?.sc.getEvent(e)!,
-        );
+        const events = triggerEvents.map((e) => this.player?.sc.getEvent(e));
 
-        // EventService.listenEvent(this.player.sc.getEvent('sc.ready'), () => {
-        EventService.listenEvent(events, () => {
-            this.player?.checkIfPlayingThenExecCallback((paused) => {
-                if (this.options.not) {
-                    this.style.display = paused ? 'block' : 'none';
-                    return;
-                }
-                this.style.display = paused ? 'none' : 'block';
+        EventService.listenEvent(this.player.sc.getEvent('sc.ready'), () => {
+            EventService.listenEvent(events, () => {
+                this.player?.sc.checkIfPlayingThenExecCallback((paused) => {
+                    if (this.options.not) {
+                        this.style.display = paused ? 'block' : 'none';
+                        return;
+                    }
+                    this.style.display = paused ? 'none' : 'block';
+                });
             });
         });
-        // });
 
         return this;
     }

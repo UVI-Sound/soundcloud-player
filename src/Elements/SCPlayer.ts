@@ -1,13 +1,11 @@
-import { SCService, type TSCTrack } from '../Classes/SCService.ts';
+import { SCService } from '../Classes/SCService.ts';
 import { uuid } from '../utils/uuid.ts';
-import { EventService } from '../Classes/EventService.ts';
 import { type SCPlay } from './Controls/SCPlay.ts';
 import { type SCStop } from './Controls/SCStop.ts';
 import { type SCSelectTrack } from './Controls/SCSelectTrack.ts';
 import { type SCTrackIsPlaying } from './Controls/SCTrackIsPlaying.ts';
-import { type TSCPlaylistTracksChangedDetails } from '../Classes/SCServiceEvents.ts';
 import { type SCTrackIsSelected } from './Controls/SCTrackIsSelected.ts';
-import { getTrackIndexInPlaylist } from '../helpers.ts';
+import type SubPlayerElement from './SubPlayerElement.ts';
 
 export class SCPlayer extends HTMLElement {
     // Elements
@@ -20,21 +18,16 @@ export class SCPlayer extends HTMLElement {
     // Attached soundcloud instance
     sc!: SCService;
 
-    // Current playlist tracks
-    tracks: TSCTrack[] = [];
-
-    private playlistId!: string | null;
-    private playlistSecret!: string | null;
     private iframePlayer!: HTMLIFrameElement;
-    private uuid: string | undefined;
 
     connectedCallback(): void {
-        this.uuid = uuid();
-        this.playlistId = this.getAttribute('playlist') ?? null;
-        this.playlistSecret = this.getAttribute('secret') ?? null;
-
-        if (!this.initSoundcloud()) {
-            console.warn('Cant init soundcloud player');
+        if (
+            !this.initSoundcloud(
+                this.getAttribute('playlist') ?? null,
+                this.getAttribute('secret') ?? null,
+            )
+        ) {
+            console.warn('Failed to init soundcloud player');
             return;
         }
 
@@ -54,19 +47,13 @@ export class SCPlayer extends HTMLElement {
      * @return {void}
      */
     private bindEvents(): void {
-        EventService.listenEvent<TSCPlaylistTracksChangedDetails>(
-            this.sc.getEvent('playlist.tracks.changed'),
-            ({ tracks }) => (this.tracks = tracks),
-        );
-
-        this.play?.init(this);
-        this.stop?.init(this);
-
         [
+            this.play,
+            this.stop,
             ...this.selectTracks,
             ...this.trackIsPlaying,
             ...this.trackIsSelected,
-        ].forEach((elem) => elem.init(this));
+        ].forEach((elem: SubPlayerElement | null) => elem?.init(this));
     }
 
     /**
@@ -75,33 +62,23 @@ export class SCPlayer extends HTMLElement {
      * @private
      * @returns {boolean} - Returns true if initialization is successful, false otherwise.
      */
-    private initSoundcloud(): boolean {
-        if (!(this.uuid && this.playlistId)) {
+    private initSoundcloud(
+        playlistId: string | null,
+        playlistSecret: string | null,
+    ): boolean {
+        if (!playlistId) {
             return false;
         }
 
         this.iframePlayer = document.createElement('iframe');
         document.body.appendChild(this.iframePlayer);
 
-        this.sc = new SCService(this.iframePlayer, this.uuid, {
-            playlistId: this.playlistId,
-            playlistSecret: this.playlistSecret,
+        this.sc = new SCService(this.iframePlayer, uuid(), {
+            playlistId,
+            playlistSecret,
         });
         this.sc.init();
         return true;
-    }
-
-    /**
-     * Returns the index of the current track in the playlist.
-     *
-     * @returns {number} The index of the current track.
-     */
-    getCurrentTrackIndex(): number {
-        return getTrackIndexInPlaylist(this.sc.currentTrack, this.tracks);
-    }
-
-    checkIfPlayingThenExecCallback(callack: (isPaused: boolean) => void): void {
-        this.sc.soundcloud.isPaused(callack);
     }
 }
 

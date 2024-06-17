@@ -1,6 +1,7 @@
 import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
 import { type TSCTrackChangeDetails } from '../../Classes/SCServiceEvents.ts';
+import SubPlayerElement from '../SubPlayerElement.ts';
 
 interface TSCTrackIsSelectedOption {
     // Index of the track in the playlist
@@ -16,19 +17,8 @@ interface TSCTrackIsSelectedOption {
     initialHide: boolean;
 }
 
-export class SCTrackIsSelected extends HTMLElement {
-    private player!: SCPlayer;
+export class SCTrackIsSelected extends SubPlayerElement {
     private options!: TSCTrackIsSelectedOption;
-
-    init(player: SCPlayer): this {
-        this.attachPlayer(player).initOptions().bindEvent();
-
-        if (this.options.initialHide) {
-            this.style.display = 'none';
-        }
-
-        return this;
-    }
 
     initOptions(): this {
         const trackId = this.getAttribute('track-id');
@@ -41,6 +31,10 @@ export class SCTrackIsSelected extends HTMLElement {
             initialHide: initialHide !== null,
         };
 
+        if (this.options.initialHide) {
+            this.style.display = 'none';
+        }
+
         return this;
     }
 
@@ -49,21 +43,25 @@ export class SCTrackIsSelected extends HTMLElement {
         return this;
     }
 
-    private bindEvent(): this {
+    bindEvents(): this {
         const event = this.options.before ? 'track.change' : 'track.changed';
 
-        EventService.listenEvent<TSCTrackChangeDetails>(
-            this.player.sc.getEvent(event),
-            (detail) => {
-                if (
-                    !this.options.trackIds?.includes(detail.currentTrackIndex)
-                ) {
-                    this.style.display = 'none';
-                    return;
-                }
-                this.style.display = 'block';
-            },
-        );
+        EventService.listenEvent(this.player.sc.getEvent('sc.ready'), () => {
+            EventService.listenEvent<TSCTrackChangeDetails>(
+                this.player.sc.getEvent(event),
+                (detail) => {
+                    if (
+                        !this.options.trackIds?.includes(
+                            detail.currentTrackIndex,
+                        )
+                    ) {
+                        this.style.display = 'none';
+                        return;
+                    }
+                    this.style.display = 'block';
+                },
+            );
+        });
 
         return this;
     }
