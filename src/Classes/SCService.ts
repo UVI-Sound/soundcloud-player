@@ -35,6 +35,7 @@ export class SCService {
         },
     ) {
         this.currentTrack = {
+            id: -1,
             title: '',
             duration: 0,
             percentPlayed: 0,
