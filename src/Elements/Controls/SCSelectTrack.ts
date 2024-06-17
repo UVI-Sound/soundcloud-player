@@ -1,6 +1,6 @@
 import { EventService } from '../../Classes/EventService.ts';
-import { type TSCTrackChangeDetails } from '../../Classes/SCServiceEvents.ts';
 import SubPlayerElement from '../SubPlayerElement.ts';
+import { type TSCTrackChangeDetails } from '../../types.ts';
 
 interface TSelectTrackOptions {
     trackId: number;

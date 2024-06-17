@@ -1,7 +1,7 @@
 import { type SCPlayer } from '../SCPlayer.ts';
 import { EventService } from '../../Classes/EventService.ts';
-import { type TSCTrackChangeDetails } from '../../Classes/SCServiceEvents.ts';
 import SubPlayerElement from '../SubPlayerElement.ts';
+import { type TSCTrackChangeDetails } from '../../types.ts';
 
 interface TSCTrackIsSelectedOption {
     // Index of the track in the playlist

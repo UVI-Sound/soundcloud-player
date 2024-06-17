@@ -1,6 +1,6 @@
 import { EventService } from '../../Classes/EventService.ts';
-import { type TSCEvents } from '../../Classes/SCServiceEvents.ts';
 import SubPlayerElement from '../SubPlayerElement.ts';
+import { type TSCEvents } from '../../types.ts';
 
 interface TSCTrackIsPlayingOptions {
     // If true, the condition will be inverted

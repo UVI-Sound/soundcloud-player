@@ -1,4 +1,22 @@
-import { type TSCTrack } from './SCService.ts';
+export interface TSCTrack {
+    title: string;
+    duration: number;
+    percentPlayed: number;
+    artwork_url: string;
+    id?: number;
+}
+
+export interface TSCWidget {
+    bind: <T>(type: string, callback: (data: T) => void) => void;
+    getSounds: (callback: (sounds: TSCTrack[]) => void) => void;
+    play: () => void;
+    pause: () => void;
+    seekTo: (ms: number) => void;
+    skip: (soundIndex: number) => void;
+    getCurrentSound: (callback: (currentSound: TSCTrack) => void) => void;
+
+    isPaused: (callback: (isPaused: boolean) => void) => void;
+}
 
 export type TSCEvents =
     | 'sc.ready'

@@ -1,11 +1,11 @@
 import { SCService } from '../Classes/SCService.ts';
-import { uuid } from '../utils/uuid.ts';
 import { type SCPlay } from './Controls/SCPlay.ts';
 import { type SCStop } from './Controls/SCStop.ts';
 import { type SCSelectTrack } from './Controls/SCSelectTrack.ts';
 import { type SCTrackIsPlaying } from './Controls/SCTrackIsPlaying.ts';
 import { type SCTrackIsSelected } from './Controls/SCTrackIsSelected.ts';
 import type SubPlayerElement from './SubPlayerElement.ts';
+import { uuid } from '../helpers.ts';
 
 export class SCPlayer extends HTMLElement {
     // Elements
