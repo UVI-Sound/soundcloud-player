@@ -53,9 +53,7 @@ export class SCService {
         this.iframe.src =
             'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
             this.options.playlistId +
-            (this.options.playlistSecret
-                ? '%3Fsecret_token%3' + this.options.playlistSecret
-                : '');
+            (this.options.playlistSecret ? '%3Fsecret_token%3' + this.options.playlistSecret : '');
 
         hideIframe(this.iframe);
         loadScript('https://w.soundcloud.com/player/api.js', () => {
@@ -74,10 +72,7 @@ export class SCService {
      */
     skipTo(index: number, resetTime: boolean = false): void {
         if (resetTime) {
-            EventService.sendEvent<TSCTrackSetTime>(
-                this.getEvent('track.set-time'),
-                { ms: 0 },
-            );
+            EventService.sendEvent<TSCTrackSetTime>(this.getEvent('track.set-time'), { ms: 0 });
         }
         this.soundcloud.skip(index);
         this.soundcloud.getCurrentSound(this.trackChanged.bind(this));
@@ -108,9 +103,7 @@ export class SCService {
      * @return {void}
      * @param callback
      */
-    checkIfPlayingThenExecCallback(
-        callback: (isPaused: boolean) => void,
-    ): void {
+    checkIfPlayingThenExecCallback(callback: (isPaused: boolean) => void): void {
         this.soundcloud.isPaused(callback);
     }
 
@@ -124,15 +117,9 @@ export class SCService {
      */
     private trackChanged(track: TSCTrack): void {
         this.currentTrack = track;
-        EventService.sendEvent<TSCTrackChangeDetails>(
-            this.getEvent('track.changed'),
-            {
-                currentTrackIndex: getTrackIndexInPlaylist(
-                    track,
-                    this.currentPlaylist,
-                ),
-            },
-        );
+        EventService.sendEvent<TSCTrackChangeDetails>(this.getEvent('track.changed'), {
+            currentTrackIndex: getTrackIndexInPlaylist(track, this.currentPlaylist),
+        });
     }
 
     /**
@@ -146,27 +133,19 @@ export class SCService {
             this.soundcloud.getSounds((tracks: TSCTrack[]) => {
                 this.currentPlaylist = tracks;
 
-                EventService.sendEvent<TSCPlaylistTracksChangedDetails>(
-                    this.getEvent('playlist.tracks.changed'),
-                    { tracks },
-                );
+                EventService.sendEvent<TSCPlaylistTracksChangedDetails>(this.getEvent('playlist.tracks.changed'), {
+                    tracks,
+                });
 
                 this.trackChanged(tracks[0]);
             });
         });
-        this.soundcloud.bind(
-            scWindow.SC.Widget.Events.PLAY_PROGRESS,
-            (progress: { currentPosition: number }) => {
-                this.currentTrack.percentPlayed = Number(
-                    (
-                        (progress.currentPosition /
-                            this.currentTrack.duration) *
-                        100
-                    ).toFixed(2),
-                );
-                EventService.sendEvent(this.getEvent('track.progressed'));
-            },
-        );
+        this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY_PROGRESS, (progress: { currentPosition: number }) => {
+            this.currentTrack.percentPlayed = Number(
+                ((progress.currentPosition / this.currentTrack.duration) * 100).toFixed(2),
+            );
+            EventService.sendEvent(this.getEvent('track.progressed'));
+        });
 
         this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY, () => {
             EventService.sendEvent(this.getEvent('track.started'));
@@ -182,22 +161,13 @@ export class SCService {
             this.soundcloud.pause();
         });
 
-        EventService.listenEvent<TSCTrackSetTime>(
-            this.getEvent('track.set-time'),
-            (detail) => {
-                this.soundcloud.seekTo(detail.ms);
-                EventService.sendEvent<TSCTrackSetTime>(
-                    this.getEvent('track.time-set'),
-                    { ms: detail.ms },
-                );
-            },
-        );
+        EventService.listenEvent<TSCTrackSetTime>(this.getEvent('track.set-time'), (detail) => {
+            this.soundcloud.seekTo(detail.ms);
+            EventService.sendEvent<TSCTrackSetTime>(this.getEvent('track.time-set'), { ms: detail.ms });
+        });
 
-        EventService.listenEvent<TSCTrackChangeDetails>(
-            this.getEvent('track.change'),
-            (detail) => {
-                this.skipTo(detail.currentTrackIndex, detail.withTimeReset);
-            },
-        );
+        EventService.listenEvent<TSCTrackChangeDetails>(this.getEvent('track.change'), (detail) => {
+            this.skipTo(detail.currentTrackIndex, detail.withTimeReset);
+        });
     }
 }

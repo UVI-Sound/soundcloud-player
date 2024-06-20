@@ -21,12 +21,7 @@ export class SCPlayer extends HTMLElement {
     private iframePlayer!: HTMLIFrameElement;
 
     connectedCallback(): void {
-        if (
-            !this.initSoundcloud(
-                this.getAttribute('playlist') ?? null,
-                this.getAttribute('secret') ?? null,
-            )
-        ) {
+        if (!this.initSoundcloud(this.getAttribute('playlist') ?? null, this.getAttribute('secret') ?? null)) {
             console.warn('Failed to init soundcloud player');
             return;
         }
@@ -47,13 +42,9 @@ export class SCPlayer extends HTMLElement {
      * @return {void}
      */
     private bindEvents(): void {
-        [
-            this.play,
-            this.stop,
-            ...this.selectTracks,
-            ...this.trackIsPlaying,
-            ...this.trackIsSelected,
-        ].forEach((elem: SubPlayerElement | null) => elem?.init(this));
+        [this.play, this.stop, ...this.selectTracks, ...this.trackIsPlaying, ...this.trackIsSelected].forEach(
+            (elem: SubPlayerElement | null) => elem?.init(this),
+        );
     }
 
     /**
@@ -62,10 +53,7 @@ export class SCPlayer extends HTMLElement {
      * @private
      * @returns {boolean} - Returns true if initialization is successful, false otherwise.
      */
-    private initSoundcloud(
-        playlistId: string | null,
-        playlistSecret: string | null,
-    ): boolean {
+    private initSoundcloud(playlistId: string | null, playlistSecret: string | null): boolean {
         if (!playlistId) {
             return false;
         }

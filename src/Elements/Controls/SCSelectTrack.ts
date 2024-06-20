@@ -12,9 +12,7 @@ export class SCSelectTrack extends SubPlayerElement {
 
     initOptions(): this {
         const trackId = this.getAttribute('track-id');
-        const withProgressionReset = this.getAttribute(
-            'with-progression-reset',
-        );
+        const withProgressionReset = this.getAttribute('with-progression-reset');
 
         if (trackId === null) {
             console.warn('Cant init event without track-id', this);
@@ -38,13 +36,10 @@ export class SCSelectTrack extends SubPlayerElement {
         const scInstance = this.player.sc;
 
         this.addEventListener('click', () => {
-            EventService.sendEvent<TSCTrackChangeDetails>(
-                scInstance.getEvent('track.change'),
-                {
-                    currentTrackIndex: this.options.trackId,
-                    withTimeReset: this.options.withProgressionReset,
-                },
-            );
+            EventService.sendEvent<TSCTrackChangeDetails>(scInstance.getEvent('track.change'), {
+                currentTrackIndex: this.options.trackId,
+                withTimeReset: this.options.withProgressionReset,
+            });
         });
         return this;
     }

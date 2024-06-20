@@ -5,10 +5,7 @@ import { type TSCTrack } from './types.ts';
  * @param track
  * @param tracks
  */
-export function getTrackIndexInPlaylist(
-    track: TSCTrack,
-    tracks: TSCTrack[],
-): number {
+export function getTrackIndexInPlaylist(track: TSCTrack, tracks: TSCTrack[]): number {
     return tracks.findIndex((t) => t.id === track.id);
 }
 
@@ -55,13 +52,7 @@ export const loadScript = (url: string, callback: () => void): void => {
  * @returns {string} The generated UUID.
  */
 export const uuid = (): string => {
-    return '10000000-1000-4000-8000-100000000000'.replace(
-        /[018]/g,
-        (c: string) =>
-            (
-                parseInt(c) ^
-                (crypto.getRandomValues(new Uint8Array(1))[0] &
-                    (15 >> (parseInt(c) / 4)))
-            ).toString(16),
+    return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c: string) =>
+        (parseInt(c) ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (parseInt(c) / 4)))).toString(16),
     );
 };

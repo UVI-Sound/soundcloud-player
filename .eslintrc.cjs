@@ -30,5 +30,6 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
         indent: 'off',
+        'max-len': ['error', { code: 120 }],
     },
 };

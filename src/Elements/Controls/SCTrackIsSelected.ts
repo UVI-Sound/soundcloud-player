@@ -47,20 +47,13 @@ export class SCTrackIsSelected extends SubPlayerElement {
         const event = this.options.before ? 'track.change' : 'track.changed';
 
         EventService.listenEvent(this.player.sc.getEvent('sc.ready'), () => {
-            EventService.listenEvent<TSCTrackChangeDetails>(
-                this.player.sc.getEvent(event),
-                (detail) => {
-                    if (
-                        !this.options.trackIds?.includes(
-                            detail.currentTrackIndex,
-                        )
-                    ) {
-                        this.style.display = 'none';
-                        return;
-                    }
-                    this.style.display = 'block';
-                },
-            );
+            EventService.listenEvent<TSCTrackChangeDetails>(this.player.sc.getEvent(event), (detail) => {
+                if (!this.options.trackIds?.includes(detail.currentTrackIndex)) {
+                    this.style.display = 'none';
+                    return;
+                }
+                this.style.display = 'block';
+            });
         });
 
         return this;

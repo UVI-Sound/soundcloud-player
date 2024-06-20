@@ -56,44 +56,19 @@
             }
 
             .dry-background {
-                background-image: linear-gradient(
-                    75deg,
-                    #ff7878,
-                    #ffb3b3,
-                    #ff5252
-                );
+                background-image: linear-gradient(75deg, #ff7878, #ffb3b3, #ff5252);
             }
             .flanger-background {
-                background-image: linear-gradient(
-                    75deg,
-                    #bb72e7,
-                    #eeaae7,
-                    #a24ad3
-                );
+                background-image: linear-gradient(75deg, #bb72e7, #eeaae7, #a24ad3);
             }
             .delay-background {
-                background-image: linear-gradient(
-                    75deg,
-                    #7895ff,
-                    #b9c8ff,
-                    #4262d7
-                );
+                background-image: linear-gradient(75deg, #7895ff, #b9c8ff, #4262d7);
             }
             .color-background {
-                background-image: linear-gradient(
-                    75deg,
-                    #62d981,
-                    #b8e9c5,
-                    #63c57d
-                );
+                background-image: linear-gradient(75deg, #62d981, #b8e9c5, #63c57d);
             }
             .chorus-background {
-                background-image: linear-gradient(
-                    75deg,
-                    #eb8052,
-                    #ffb697,
-                    #f46b31
-                );
+                background-image: linear-gradient(75deg, #eb8052, #ffb697, #f46b31);
             }
 
             @keyframes AnimationBackgroundGradient {
@@ -118,10 +93,7 @@
             >
                 <div class="flex flex-col gap-y-20">
                     <div class="text-4xl">
-                        <div
-                            class="flex justify-center gap-x-12"
-                            id="guitare-control"
-                        >
+                        <div class="flex justify-center gap-x-12" id="guitare-control">
                             <sc-select-track
                                 track-id="0"
                                 with-progression-reset
@@ -163,11 +135,7 @@
                                 >Chorus</sc-select-track
                             >
                         </div>
-                        <div
-                            class="hidden justify-center gap-x-12"
-                            id="drum-control"
-                            data-text-color="#BC73E8"
-                        >
+                        <div class="hidden justify-center gap-x-12" id="drum-control" data-text-color="#BC73E8">
                             <sc-select-track
                                 track-id="5"
                                 with-progression-reset
@@ -209,11 +177,7 @@
                                 >Chorus</sc-select-track
                             >
                         </div>
-                        <div
-                            class="hidden justify-center gap-x-12"
-                            id="bass-control"
-                            data-text-color="#BC73E8"
-                        >
+                        <div class="hidden justify-center gap-x-12" id="bass-control" data-text-color="#BC73E8">
                             <sc-select-track
                                 track-id="10"
                                 with-progression-reset
@@ -255,11 +219,7 @@
                                 >Chorus</sc-select-track
                             >
                         </div>
-                        <div
-                            class="hidden justify-center gap-x-12"
-                            id="key-control"
-                            data-text-color="#BC73E8"
-                        >
+                        <div class="hidden justify-center gap-x-12" id="key-control" data-text-color="#BC73E8">
                             <sc-select-track
                                 track-id="15"
                                 with-progression-reset
@@ -301,11 +261,7 @@
                                 >Chorus</sc-select-track
                             >
                         </div>
-                        <div
-                            class="hidden justify-center gap-x-12"
-                            id="vocal-control"
-                            data-text-color="#BC73E8"
-                        >
+                        <div class="hidden justify-center gap-x-12" id="vocal-control" data-text-color="#BC73E8">
                             <sc-select-track
                                 track-id="20"
                                 with-progression-reset
@@ -350,38 +306,22 @@
                     </div>
 
                     <div>
-                        <sc-track-is-selected
-                            before
-                            track-id="[0, 5, 10, 15, 20]"
-                        >
+                        <sc-track-is-selected before track-id="[0, 5, 10, 15, 20]">
                             <img
                                 src="https://www.uvi.net/img/cms/Tape-Suite/Player/Dry.png"
                                 class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
                                 alt=""
                             />
                         </sc-track-is-selected>
-                        <sc-track-is-selected
-                            before
-                            track-id="[1, 6, 11, 16, 21]"
-                            initial-hide
-                        >
-                            <sc-track-is-playing
-                                check-on-change
-                                before
-                                initial-hide
-                            >
+                        <sc-track-is-selected before track-id="[1, 6, 11, 16, 21]" initial-hide>
+                            <sc-track-is-playing check-on-change before initial-hide>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
                                     alt=""
                                 />
                             </sc-track-is-playing>
-                            <sc-track-is-playing
-                                check-on-change
-                                before
-                                initial-hide
-                                not
-                            >
+                            <sc-track-is-playing check-on-change before initial-hide not>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.png"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
@@ -389,27 +329,15 @@
                                 />
                             </sc-track-is-playing>
                         </sc-track-is-selected>
-                        <sc-track-is-selected
-                            before
-                            track-id="[2, 7, 12, 17, 22]"
-                            initial-hide
-                        >
-                            <sc-track-is-playing
-                                check-on-change
-                                before
-                                initial-hide
-                            >
+                        <sc-track-is-selected before track-id="[2, 7, 12, 17, 22]" initial-hide>
+                            <sc-track-is-playing check-on-change before initial-hide>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Delay.webp"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
                                     alt=""
                                 />
                             </sc-track-is-playing>
-                            <sc-track-is-playing
-                                check-on-changebefore
-                                initial-hide
-                                not
-                            >
+                            <sc-track-is-playing check-on-changebefore initial-hide not>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Delay.png"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
@@ -417,28 +345,15 @@
                                 />
                             </sc-track-is-playing>
                         </sc-track-is-selected>
-                        <sc-track-is-selected
-                            before
-                            track-id="[3, 8, 13, 18, 23]"
-                            initial-hide
-                        >
-                            <sc-track-is-playing
-                                check-on-change
-                                before
-                                initial-hide
-                            >
+                        <sc-track-is-selected before track-id="[3, 8, 13, 18, 23]" initial-hide>
+                            <sc-track-is-playing check-on-change before initial-hide>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Color.webp"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
                                     alt=""
                                 />
                             </sc-track-is-playing>
-                            <sc-track-is-playing
-                                check-on-change
-                                before
-                                initial-hide
-                                not
-                            >
+                            <sc-track-is-playing check-on-change before initial-hide not>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Color.png"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
@@ -446,28 +361,15 @@
                                 />
                             </sc-track-is-playing>
                         </sc-track-is-selected>
-                        <sc-track-is-selected
-                            before
-                            track-id="[4, 9, 14, 19, 24]"
-                            initial-hide
-                        >
-                            <sc-track-is-playing
-                                check-on-change
-                                before
-                                initial-hide
-                            >
+                        <sc-track-is-selected before track-id="[4, 9, 14, 19, 24]" initial-hide>
+                            <sc-track-is-playing check-on-change before initial-hide>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Chorus.webp"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
                                     alt=""
                                 />
                             </sc-track-is-playing>
-                            <sc-track-is-playing
-                                check-on-change
-                                before
-                                initial-hide
-                                not
-                            >
+                            <sc-track-is-playing check-on-change before initial-hide not>
                                 <img
                                     src="https://www.uvi.net/img/cms/Tape-Suite/Player/Chorus.png"
                                     class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
@@ -540,75 +442,4 @@
         </div>
         <script type="module" src="/src/main.ts"></script>
     </body>
-    <script type="text/javascript" defer>
-        const player = document.querySelector('soundcloud-player');
-        const drum = document.getElementById('drum');
-        const guitare = document.getElementById('guitare');
-        const bass = document.getElementById('bass');
-        const key = document.getElementById('key');
-        const vocal = document.getElementById('vocal');
-
-        [drum, guitare, bass, key, vocal].forEach((el) =>
-            el.addEventListener('click', ({ target }) => {
-                hideOthers(target);
-            }),
-        );
-
-        document.querySelectorAll('sc-select-track').forEach((element) => {
-            element.addEventListener('click', (event) => {
-                activeControlTrack(event.target);
-            });
-        });
-
-        function hideOthers(el) {
-            [drum, guitare, bass, key, vocal]
-                .filter((other) => other.id !== el.id)
-                .forEach((other) => {
-                    const controlId = other.id + '-control';
-                    const control = document.getElementById(controlId);
-                    other.classList.remove('bg-white/50');
-                    control.classList.remove('flex');
-                    control.classList.add('hidden');
-                });
-
-            document.getElementById(el.id).classList.add('bg-white/50');
-            document
-                .getElementById(el.id + '-control')
-                .classList.remove('hidden');
-            document.getElementById(el.id + '-control').classList.add('flex');
-
-            playPreviousEffectWithNewSound(el.id);
-        }
-
-        function playPreviousEffectWithNewSound(kind) {
-            const currentIndex = player.sc.getCurrentTrackIndex() % 5;
-            const toPlay = getControls(kind)[currentIndex];
-            const trackId = toPlay.getAttribute('track-id');
-            player.sc.skipTo(trackId);
-        }
-
-        function getControls(kind) {
-            return document.querySelectorAll(
-                `#${kind}-control sc-select-track`,
-            );
-        }
-
-        function activeControlTrack(control) {
-            document.querySelectorAll('sc-select-track').forEach((other) => {
-                if (other !== control) {
-                    other.classList.remove('bg-white/50'); // Supprimer la classe des autres éléments
-                }
-            });
-
-            for (let i = player.classList.length - 1; i >= 0; i--) {
-                if (player.classList[i].includes('-background')) {
-                    player.classList.remove(player.classList[i]);
-                }
-            }
-
-            player.classList.add(control.getAttribute('data-background-class'));
-
-            control.classList.add('bg-white/50'); // Ajouter/supprimer la classe sur l'élément cliqué
-        }
-    </script>
 </html>

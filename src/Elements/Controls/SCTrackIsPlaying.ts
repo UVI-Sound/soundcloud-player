@@ -46,19 +46,11 @@ export class SCTrackIsPlaying extends SubPlayerElement {
             return this;
         }
 
-        const start: TSCEvents = this.options.before
-            ? 'track.start'
-            : 'track.started';
-        const stop: TSCEvents = this.options.before
-            ? 'track.stop'
-            : 'track.stopped';
-        const change: TSCEvents = this.options.before
-            ? 'track.change'
-            : 'track.changed';
+        const start: TSCEvents = this.options.before ? 'track.start' : 'track.started';
+        const stop: TSCEvents = this.options.before ? 'track.stop' : 'track.stopped';
+        const change: TSCEvents = this.options.before ? 'track.change' : 'track.changed';
 
-        const triggerEvents: TSCEvents[] = !this.options.checkOnChange
-            ? [start, stop]
-            : [change, start, stop];
+        const triggerEvents: TSCEvents[] = !this.options.checkOnChange ? [start, stop] : [change, start, stop];
 
         const events = triggerEvents.map((e) => this.player?.sc.getEvent(e));
 
