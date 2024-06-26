@@ -145,6 +145,10 @@ export class SCService {
                 ((progress.currentPosition / this.currentTrack.duration) * 100).toFixed(2),
             );
             EventService.sendEvent(this.getEvent('track.progressed'));
+
+            if (this.currentTrack.duration - progress.currentPosition <= 50) {
+                EventService.sendEvent<TSCTrackSetTime>(this.getEvent('track.set-time'), { ms: 0 });
+            }
         });
 
         this.soundcloud.bind(scWindow.SC.Widget.Events.PLAY, () => {

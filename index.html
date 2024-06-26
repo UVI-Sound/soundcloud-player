@@ -55,6 +55,10 @@
                     -9px -8px 25px #ffffff32;
             }
 
+            /**
+            {color: "vert", chorus: "marron", flanger: "violet"}
+             */
+
             .dry-background {
                 background-image: linear-gradient(75deg, #ff7878, #ffb3b3, #ff5252);
             }
@@ -87,356 +91,363 @@
     <body>
         <div>
             <soundcloud-player
-                playlist="1836473109"
-                secret="Ds-SGKu0MyjOV9"
-                class="min-h-[500px] flex justify-center mb-0 py-40 dry-background background-animate"
+                id="hear"
+                playlist="1842393039"
+                secret="Ds-CZ1xbRxdLLt"
+                class="min-h-[500px] block mb-0 py-20 dry-background background-animate"
             >
-                <div class="flex flex-col gap-y-20">
-                    <div class="text-4xl">
-                        <div class="flex justify-center gap-x-12" id="guitare-control">
-                            <sc-select-track
-                                track-id="0"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="dry-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
-                                >Dry</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="1"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="flanger-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Flanger</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="2"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="delay-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Delay</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="3"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="color-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Color</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="4"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="chorus-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Chorus</sc-select-track
-                            >
+                <div class="text-6xl text-white mb-20 text-center">試聴</div>
+
+                <div class="flex justify-center">
+                    <div class="w-[91px]"></div>
+
+                    <div class="flex flex-col gap-y-20">
+                        <div class="text-4xl">
+                            <div class="flex justify-center gap-x-12" id="guitare-control">
+                                <sc-select-track
+                                    track-id="0"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="dry-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                    >Dry</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="1"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="color-background"
+                                    class="border border-white cursor-pointer block !mb-0 rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Color</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="2"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="delay-background"
+                                    class="border border-white cursor-pointer block !mb-0 rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Delay</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="3"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="chorus-background"
+                                    class="border border-white cursor-pointer block !mb-0 rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Chorus</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="4"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="flanger-background"
+                                    class="border border-white cursor-pointer block !mb-0 rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Flanger</sc-select-track
+                                >
+                            </div>
+                            <div class="hidden justify-center gap-x-12" id="drum-control" data-text-color="#BC73E8">
+                                <sc-select-track
+                                    track-id="5"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="dry-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                    >Dry</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="6"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="color-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Color</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="7"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="delay-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Delay</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="8"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="chorus-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Chorus</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="9"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="flanger-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Flanger</sc-select-track
+                                >
+                            </div>
+                            <div class="hidden justify-center gap-x-12" id="bass-control" data-text-color="#BC73E8">
+                                <sc-select-track
+                                    track-id="10"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="dry-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                    >Dry</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="11"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="color-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Color</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="12"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="delay-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Delay</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="13"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="chorus-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Chorus</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="14"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="flanger-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Flanger</sc-select-track
+                                >
+                            </div>
+                            <div class="hidden justify-center gap-x-12" id="key-control" data-text-color="#BC73E8">
+                                <sc-select-track
+                                    track-id="15"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="dry-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                    >Dry</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="16"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="color-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Color</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="17"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="delay-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Delay</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="18"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="chorus-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Chorus</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="19"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="flanger-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Flanger</sc-select-track
+                                >
+                            </div>
+                            <div class="hidden justify-center gap-x-12" id="vocal-control" data-text-color="#BC73E8">
+                                <sc-select-track
+                                    track-id="20"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="dry-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
+                                    >Dry</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="21"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="color-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Color</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="22"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="delay-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Delay</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="23"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="chorus-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Chorus</sc-select-track
+                                >
+                                <sc-select-track
+                                    track-id="24"
+                                    with-progression-reset
+                                    data-text-color="#BC73E8"
+                                    data-background-class="flanger-background"
+                                    class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
+                                    >Flanger</sc-select-track
+                                >
+                            </div>
                         </div>
-                        <div class="hidden justify-center gap-x-12" id="drum-control" data-text-color="#BC73E8">
-                            <sc-select-track
-                                track-id="5"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="dry-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
-                                >Dry</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="6"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="flanger-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Flanger</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="7"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="delay-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Delay</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="8"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="color-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Color</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="9"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="chorus-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Chorus</sc-select-track
-                            >
+
+                        <div>
+                            <sc-track-is-selected before track-id="[0, 5, 10, 15, 20]">
+                                <img
+                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Dry.png"
+                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                    alt=""
+                                />
+                            </sc-track-is-selected>
+                            <sc-track-is-selected before track-id="[1, 6, 11, 16, 21]" initial-hide>
+                                <sc-track-is-playing check-on-change before initial-hide>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Color.webp"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                                <sc-track-is-playing check-on-change before initial-hide not>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Color.png"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                            </sc-track-is-selected>
+                            <sc-track-is-selected before track-id="[2, 7, 12, 17, 22]" initial-hide>
+                                <sc-track-is-playing check-on-change before initial-hide>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Delay.webp"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                                <sc-track-is-playing check-on-changebefore initial-hide not>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Delay.png"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                            </sc-track-is-selected>
+                            <sc-track-is-selected before track-id="[3, 8, 13, 18, 23]" initial-hide>
+                                <sc-track-is-playing check-on-change before initial-hide>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Chorus.webp"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                                <sc-track-is-playing check-on-change before initial-hide not>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Chorus.png"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                            </sc-track-is-selected>
+                            <sc-track-is-selected before track-id="[4, 9, 14, 19, 24]" initial-hide>
+                                <sc-track-is-playing check-on-change before initial-hide>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                                <sc-track-is-playing check-on-change before initial-hide not>
+                                    <img
+                                        src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.png"
+                                        class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                        alt=""
+                                    />
+                                </sc-track-is-playing>
+                            </sc-track-is-selected>
                         </div>
-                        <div class="hidden justify-center gap-x-12" id="bass-control" data-text-color="#BC73E8">
-                            <sc-select-track
-                                track-id="10"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="dry-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
-                                >Dry</sc-select-track
+
+                        <div class="flex justify-center gap-x-12 text-4xl">
+                            <button
+                                type="button"
+                                class="border border-white rounded-2xl px-8 py-3 font-bold text-white bg-white/50"
+                                id="guitare"
                             >
-                            <sc-select-track
-                                track-id="11"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="flanger-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Flanger</sc-select-track
+                                Guitar
+                            </button>
+                            <button
+                                type="button"
+                                class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                                id="drum"
                             >
-                            <sc-select-track
-                                track-id="12"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="delay-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Delay</sc-select-track
+                                Drums
+                            </button>
+                            <button
+                                type="button"
+                                class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                                id="bass"
                             >
-                            <sc-select-track
-                                track-id="13"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="color-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Color</sc-select-track
+                                Piano
+                            </button>
+                            <button
+                                type="button"
+                                class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                                id="key"
                             >
-                            <sc-select-track
-                                track-id="14"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="chorus-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Chorus</sc-select-track
+                                Saxophone
+                            </button>
+                            <button
+                                type="button"
+                                class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
+                                id="vocal"
                             >
-                        </div>
-                        <div class="hidden justify-center gap-x-12" id="key-control" data-text-color="#BC73E8">
-                            <sc-select-track
-                                track-id="15"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="dry-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
-                                >Dry</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="16"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="flanger-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Flanger</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="17"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="delay-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Delay</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="18"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="color-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Color</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="19"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="chorus-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Chorus</sc-select-track
-                            >
-                        </div>
-                        <div class="hidden justify-center gap-x-12" id="vocal-control" data-text-color="#BC73E8">
-                            <sc-select-track
-                                track-id="20"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="dry-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold bg-white/50"
-                                >Dry</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="21"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="flanger-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Flanger</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="22"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="delay-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Delay</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="23"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="color-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Color</sc-select-track
-                            >
-                            <sc-select-track
-                                track-id="24"
-                                with-progression-reset
-                                data-text-color="#BC73E8"
-                                data-background-class="chorus-background"
-                                class="border border-white cursor-pointer rounded-2xl px-8 py-3 text-white font-bold"
-                                >Chorus</sc-select-track
-                            >
+                                Keys
+                            </button>
                         </div>
                     </div>
 
-                    <div>
-                        <sc-track-is-selected before track-id="[0, 5, 10, 15, 20]">
-                            <img
-                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/Dry.png"
-                                class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
-                                alt=""
-                            />
-                        </sc-track-is-selected>
-                        <sc-track-is-selected before track-id="[1, 6, 11, 16, 21]" initial-hide>
-                            <sc-track-is-playing check-on-change before initial-hide>
+                    <div class="flex items-center pl-12">
+                        <sc-track-is-playing initial-hide>
+                            <sc-stop>
                                 <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.webp"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/pause.png"
+                                    class="max-w-[70px]"
                                     alt=""
                                 />
-                            </sc-track-is-playing>
-                            <sc-track-is-playing check-on-change before initial-hide not>
+                            </sc-stop>
+                        </sc-track-is-playing>
+                        <sc-track-is-playing not>
+                            <sc-play>
                                 <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Flanger.png"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
+                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/play.png"
+                                    class="max-w-[70px]"
                                     alt=""
                                 />
-                            </sc-track-is-playing>
-                        </sc-track-is-selected>
-                        <sc-track-is-selected before track-id="[2, 7, 12, 17, 22]" initial-hide>
-                            <sc-track-is-playing check-on-change before initial-hide>
-                                <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Delay.webp"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
-                                    alt=""
-                                />
-                            </sc-track-is-playing>
-                            <sc-track-is-playing check-on-changebefore initial-hide not>
-                                <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Delay.png"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
-                                    alt=""
-                                />
-                            </sc-track-is-playing>
-                        </sc-track-is-selected>
-                        <sc-track-is-selected before track-id="[3, 8, 13, 18, 23]" initial-hide>
-                            <sc-track-is-playing check-on-change before initial-hide>
-                                <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Color.webp"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
-                                    alt=""
-                                />
-                            </sc-track-is-playing>
-                            <sc-track-is-playing check-on-change before initial-hide not>
-                                <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Color.png"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
-                                    alt=""
-                                />
-                            </sc-track-is-playing>
-                        </sc-track-is-selected>
-                        <sc-track-is-selected before track-id="[4, 9, 14, 19, 24]" initial-hide>
-                            <sc-track-is-playing check-on-change before initial-hide>
-                                <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Chorus.webp"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
-                                    alt=""
-                                />
-                            </sc-track-is-playing>
-                            <sc-track-is-playing check-on-change before initial-hide not>
-                                <img
-                                    src="https://www.uvi.net/img/cms/Tape-Suite/Player/Chorus.png"
-                                    class="max-w-[224px] mx-auto rounded-full !border-solid !border-4 !border-white player-icon"
-                                    alt=""
-                                />
-                            </sc-track-is-playing>
-                        </sc-track-is-selected>
+                            </sc-play>
+                        </sc-track-is-playing>
                     </div>
-
-                    <div class="flex justify-center gap-x-12 text-4xl">
-                        <button
-                            type="button"
-                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white bg-white/50"
-                            id="guitare"
-                        >
-                            Guitar
-                        </button>
-                        <button
-                            type="button"
-                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
-                            id="drum"
-                        >
-                            Drum
-                        </button>
-                        <button
-                            type="button"
-                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
-                            id="bass"
-                        >
-                            Bass
-                        </button>
-                        <button
-                            type="button"
-                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
-                            id="key"
-                        >
-                            Key
-                        </button>
-                        <button
-                            type="button"
-                            class="border border-white rounded-2xl px-8 py-3 font-bold text-white"
-                            id="vocal"
-                        >
-                            Vocal
-                        </button>
-                    </div>
-                </div>
-
-                <div class="flex items-center pl-12">
-                    <sc-track-is-playing initial-hide>
-                        <sc-stop>
-                            <img
-                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/pause.png"
-                                class="max-w-[70px]"
-                                alt=""
-                            />
-                        </sc-stop>
-                    </sc-track-is-playing>
-                    <sc-track-is-playing not>
-                        <sc-play>
-                            <img
-                                src="https://www.uvi.net/img/cms/Tape-Suite/Player/play.png"
-                                class="max-w-[70px]"
-                                alt=""
-                            />
-                        </sc-play>
-                    </sc-track-is-playing>
                 </div>
             </soundcloud-player>
         </div>

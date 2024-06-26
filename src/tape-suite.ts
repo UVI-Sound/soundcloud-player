@@ -1,5 +1,7 @@
 import { type SCSelectTrack } from './Elements/Controls/SCSelectTrack.ts';
 import { type SCPlayer } from './Elements/SCPlayer.ts';
+import { EventService } from './Classes/EventService.ts';
+import { type TSCTrackChangeDetails } from './types.ts';
 
 const player: SCPlayer | null = document.querySelector('soundcloud-player');
 
@@ -97,6 +99,8 @@ instruments.forEach((instrument) => {
         const trackId = parseInt(currentTrackSelection.getAttribute('track-id')!);
         activateButton(currentTrackSelection);
 
-        player.sc.skipTo(trackId);
+        EventService.sendEvent<TSCTrackChangeDetails>(player.sc.getEvent('track.change'), {
+            currentTrackIndex: trackId,
+        });
     });
 });
